@@ -8,6 +8,5 @@ import tech.chillo.sa.entites.Bouquet;
 
 public interface BouquetRepository extends JpaRepository<Bouquet, Integer> {
     List<Bouquet> findAll();
-
     Optional<Bouquet> findById(int id);
 }

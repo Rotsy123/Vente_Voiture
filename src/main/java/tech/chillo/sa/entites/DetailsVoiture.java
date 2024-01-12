@@ -1,0 +1,124 @@
+package tech.chillo.sa.entites;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "detailsvoiture")
+public class DetailsVoiture {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "idvoiture", referencedColumnName = "id")
+    @JsonIgnore
+    Voiture voiture;
+    double kilometrage;
+    int nbplaces;
+    int nbportes;
+    double etat_interieur;
+    double etat_exterieur;
+    double consommation;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @JoinColumn(name="idcarburant")
+    Carburant carburant;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @JoinColumn(name="idtransmission")
+    Transmission transmission;
+    double prix;
+
+
+    public DetailsVoiture(){}
+    public DetailsVoiture(Voiture voiture, double kilometrage, int nbplaces, int nbportes, double etat_interieur, double etat_exterieur, double consommation, Carburant carburant, Transmission transmission, double prix) throws Exception {
+        this.voiture = voiture;
+        this.kilometrage = kilometrage;
+        this.nbplaces = nbplaces;
+        this.nbportes = nbportes;
+        this.etat_interieur = etat_interieur;
+        this.etat_exterieur = etat_exterieur;
+        this.consommation = consommation;
+        this.carburant = carburant;
+        this.transmission = transmission;
+        this.setPrix(prix);
+    }
+
+    public double getPrix(){return this.prix;}
+    public void setPrix(double prix)throws Exception{
+        if(prix>=0){
+            this.prix = prix;
+        }else{
+            throw new Exception("PRIX NEGATIF");
+        }
+    }
+    public Voiture getVoiture() {
+        return voiture;
+    }
+
+    public void setVoiture(Voiture voiture) {
+        this.voiture = voiture;
+    }
+
+    public double getKilometrage() {
+        return kilometrage;
+    }
+
+    public void setKilometrage(double kilometrage) {
+        this.kilometrage = kilometrage;
+    }
+
+    public int getNbplaces() {
+        return nbplaces;
+    }
+
+    public void setNbplaces(int nbplaces) {
+        this.nbplaces = nbplaces;
+    }
+
+    public int getNbportes() {
+        return nbportes;
+    }
+
+    public void setNbportes(int nbportes) {
+        this.nbportes = nbportes;
+    }
+
+    public double getEtat_interieur() {
+        return etat_interieur;
+    }
+
+    public void setEtat_interieur(double etat_interieur) {
+        this.etat_interieur = etat_interieur;
+    }
+
+    public double getEtat_exterieur() {
+        return etat_exterieur;
+    }
+
+    public void setEtat_exterieur(double etat_exterieur) {
+        this.etat_exterieur = etat_exterieur;
+    }
+
+    public double getConsommation() {
+        return consommation;
+    }
+
+    public void setConsommation(double consommation) {
+        this.consommation = consommation;
+    }
+
+    public Carburant getCarburant() {
+        return carburant;
+    }
+
+    public void setCarburant(Carburant carburant) {
+        this.carburant = carburant;
+    }
+
+    public Transmission getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(Transmission transmission) {
+        this.transmission = transmission;
+    }
+}
