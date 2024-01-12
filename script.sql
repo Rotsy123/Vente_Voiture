@@ -1,4 +1,4 @@
-create table voiture;
+create database voiture;
 \c voiture;
 
 create table bouquet(
@@ -124,4 +124,38 @@ insert into bouquet (nom, pourcentage_commission) values
 ('bouquet2',10),
 ('bouquet3',20),
 ('bouquet4',30);
+
+
+
+insert into bouquet (nom, pourcentage_commission) values 
+('bouquet1',0),
+('bouquet2',10),
+('bouquet3',20),
+('bouquet4',30);
+
+
+create table personne(
+    id serial primary key,
+    nom varchar(50),
+    prenoms varchar(100),
+    datedenaissance date,
+    mail varchar(100),
+    telephone varchar(10),
+    adresse varchar(100),
+    motdepasse varchar(50)
+);
+INSERT INTO personne (nom, prenoms, datedenaissance, mail, telephone, adresse, motdepasse)
+VALUES
+  ('Doe', 'John', '1990-01-15', 'john.doe@email.com', '1234567890', '123 Main St, City', 'motdepasse123'),
+  ('Smith', 'Alice', '1985-05-20', 'alice.smith@email.com', '9876543210', '456 Oak St, Town', 'mdpsecret456'),
+  ('Johnson', 'Bob', '1982-11-10', 'bob.johnson@email.com', '5551112233', '789 Pine St, Village', 'supermdp789');
+
+create table messagerie(
+    id serial primary key,
+    expediteur int,
+    destinataire int,
+    messages text,
+    dateenvoie TIMESTAMP 
+);
+
 
