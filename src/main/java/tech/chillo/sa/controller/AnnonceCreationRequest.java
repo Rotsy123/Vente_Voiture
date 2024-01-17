@@ -42,6 +42,7 @@ public class AnnonceCreationRequest {
         this.detailsVoiture = detailsVoiture;
         this.annonce = annonce;
     }
-// getters et setters
+// getters et settersti
+
 }
 

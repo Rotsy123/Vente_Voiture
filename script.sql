@@ -17,6 +17,15 @@ create table modele(
     nom varchar(50)
 );
 
+create table carburant(
+    id serial primary key,
+    nom varchar(50)
+);
+
+create table transmission(
+    id serial primary key,
+    nom varchar(50)
+);
 
 create table voiture(
     id serial primary key,
@@ -74,21 +83,6 @@ create table personne(
     dtn Date
 );
 
-
-create table carburant(
-    id serial primary key,
-    nom varchar(50)
-);
-
-create table transmission(
-    id serial primary key,
-    nom varchar(50)
-);
-    insert into annonce (idvoiture, idpersonne, datepublication, idbouquet) values
-    (2,1,'2023-12-14',2);
-    (1,1,'2023-12-12',1),
-    (2,2,'2023-12-14',2);
-
 insert into personne(nom, prenom, contact, email, dtn) values
 ('RAKOTONDRAINY', 'Rotsy', '0345770369','rakotondrainyrotsy@gmail.com','2003-10-17'),
 ('RAKOTONDRAINY', 'Miasy', '0345770369','rakotondrainyMiasy@gmail.com','2003-10-18');
@@ -96,9 +90,6 @@ insert into personne(nom, prenom, contact, email, dtn) values
 insert into carburant(nom) values ('gasoil'), ('essence');
 insert into transmission(nom) values ('boite automatique'), ('boite semie-automatique'),('boite manuelle');
 
-
-insert into detailsvoiture values 
-(1,1000,5,5,5.2,7,15,1,1);
 -- Insertion dans la table 'marque'
 INSERT INTO marque (nom) VALUES ('Toyota');
 INSERT INTO marque (nom) VALUES ('Honda');
@@ -118,6 +109,13 @@ INSERT INTO voiture (idmarque, idmodele, sortie) VALUES (1, 3, '2022-03-20');
 INSERT INTO voiture (idmarque, idmodele, sortie) VALUES (3, 4, '2022-04-10');
 INSERT INTO voiture (idmarque, idmodele, sortie) VALUES (2, 5, '2022-05-25');
 
+insert into detailsvoiture values 
+(1,1000,5,5,5.2,7,15,1,1);
+
+insert into annonce (idvoiture, idpersonne, datepublication, idbouquet) values
+    (2,1,'2023-12-14',2);
+    (1,1,'2023-12-12',1),
+    (2,2,'2023-12-14',2);
 
 insert into bouquet (nom, pourcentage_commission) values 
 ('bouquet1',0),
@@ -158,4 +156,31 @@ create table messagerie(
     dateenvoie TIMESTAMP 
 );
 
+mongod --dbpath "C:\Program Files\MongoDB\Server\7.0\data\db"
+delete from annonce;
+delete from detailsvoiture;
+delete from voiture;
 
+{
+    "voiture":{
+        "marque":{"id": 2},
+        "modele":{"id": 2},
+        "sortie":"2024-01-11"
+    },
+    "detailsVoiture": {
+        "kilometrique":3000.0,
+        "nbplaces":6,
+        "nbportes":4,
+        "etat_interieur":8.5,
+        "etat_exterieur":9,
+        "consommation":7,
+        "prix":1000,
+        "carburant":{"id": 2},
+        "transmission":{"id":1}
+    },
+    "annonce":{
+        "personne":{"id":2},
+        "dateplublication":"2024-01-11T14:00:00",
+        "bouquet":{"id": 1}
+    }
+}

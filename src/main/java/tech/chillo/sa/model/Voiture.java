@@ -1,28 +1,20 @@
-package tech.chillo.sa.entites;
+package tech.chillo.sa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
+import tech.chillo.sa.entites.Marque;
+import tech.chillo.sa.entites.Modele;
 import java.sql.Date;
 import java.util.List;
 
-@Entity
-@Table(name="voiture")
 public class Voiture {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinColumn(name = "idmarque")
     private Marque marque;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinColumn(name = "idmodele")
     private Modele modele;
     private Date sortie;
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
     private DetailsVoiture detailsVoiture;
-    //@OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
-    //private List<Photos> photos;
+
     public Voiture(){}
 
     public Voiture(int id, Marque marque, Modele modele, Date sortie, DetailsVoiture ds) {
@@ -44,9 +36,6 @@ public class Voiture {
 
     public void setDetailsVoiture(DetailsVoiture detailsVoiture) {
         this.detailsVoiture = detailsVoiture;
-        if (detailsVoiture != null) {
-            detailsVoiture.setVoiture(this);
-        }
     }
     public int getId() {
         return id;
@@ -78,6 +67,20 @@ public class Voiture {
 
     public void setSortie(Date sortie) {
         this.sortie = sortie;
+    }
+
+    public Voiture getVoiture(tech.chillo.sa.entites.Voiture voiture){
+        Voiture v = new Voiture();
+        v.setId(voiture.getId());
+        v.setMarque(voiture.getMarque());
+        v.setModele(voiture.getModele());
+        v.setSortie(voiture.getSortie());
+        try {
+            v.setDetailsVoiture(new tech.chillo.sa.model.DetailsVoiture().getDetailsVoiture(voiture.getDetailsVoiture()));
+            
+        } catch (Exception e) {
+        }
+        return v;
     }
 
 }

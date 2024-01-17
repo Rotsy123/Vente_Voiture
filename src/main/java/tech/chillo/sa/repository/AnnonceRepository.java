@@ -6,8 +6,10 @@ import org.springframework.data.repository.query.Param;
 
 import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.entites.Annonce;
-
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 
 public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("SELECT v FROM Voiture v INNER JOIN Annonce a ON v.id = a.voiture.id join bouquet on bouquet.id = a.bouquet.id WHERE a.personne.id = :idpersonne order by bouquet.pourcentage_commission desc")
@@ -19,4 +21,10 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 
     @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id order by bouquet.pourcentage_commission desc")
     List<Annonce> GetAllAnnonceOrderByBouquet();
+
+    @Query("SELECT a FROM Annonce a where a.datepublication = :datePublication and a.personne.id = :idpersonne")
+    Optional<Annonce> getAnnoncesByDatePublicationAndIdpersonne(@Param("datePublication") LocalDateTime datePublication,@Param("idpersonne") int idpersonne);
+
+    // List<Annonce> findByPersonneId(int personneId);
 }
+

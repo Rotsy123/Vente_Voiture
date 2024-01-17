@@ -1,0 +1,38 @@
+1- http://localhost:8083/api/annonce (Body - JSON)
+{
+    "voiture":{
+        "marque":{"id": 1},
+        "modele":{"id": 3},
+        "sortie":"2024-01-01"
+    },
+    "detailsVoiture": {
+        "kilometrique":3200.0,
+        "nbplaces":6,
+        "nbportes":4,
+        "etat_interieur":9,
+        "etat_exterieur":9,
+        "consommation":7,
+        "prix":3500,
+        "carburant":{"id": 1},
+        "transmission":{"id":1}
+    },
+    "annonce":{
+        "personne":{"id":2},
+        "dateplublication":"2024-01-13T14:00:00",
+        "bouquet":{"id": 1}
+    }
+}
+
+
+2- http://localhost:8083/api/messagerie
+{
+    "expediteur":{
+        "id": 1
+    },
+    "destinataire": {
+        "id": 2
+    },
+    "message":"Hi"
+}
+
+3-http://localhost:8083/api/messagerie?personne1=1&personne2=2 (discussion entre les deux personne)

@@ -1,0 +1,53 @@
+package tech.chillo.sa.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tech.chillo.sa.entites.Messagerie;
+import tech.chillo.sa.entites.Personne;
+import tech.chillo.sa.service.MessagerieService;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+
+@RestController
+@RequestMapping(path = "messagerie")
+public class MessagerieController {
+    private MessagerieService messagerieService;
+
+    public MessagerieController(MessagerieService messagerieService) {
+        this.messagerieService = messagerieService;
+    }
+
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> saveMessage(@RequestBody Messagerie request) {
+        request = this.messagerieService.saveMessagerie(request);
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> listeMessages(@RequestParam("personne1")int idpersonne1,@RequestParam("personne2")int idpersonne2) {
+        List<Messagerie> messages = messagerieService.listMessages(idpersonne1,idpersonne2);
+        return new ResponseEntity<>(messages, HttpStatus.OK);
+    } 
+
+    @GetMapping("/nombreMessage")
+    public ResponseEntity<Long> countMessageNonlue(@RequestParam("idpersonne") int idpersonne) {
+        long nombre = messagerieService.countMessageNonlue(idpersonne);
+        return new ResponseEntity<>(nombre, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateEtat")
+    public ResponseEntity<String> updateEtatMessage(@RequestParam("messageId") String messageId, 
+                                                @RequestParam("nouvelEtat") int nouvelEtat) {
+        messagerieService.updateEtatMessage(messageId, nouvelEtat);
+        return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
+    }
+
+    
+}

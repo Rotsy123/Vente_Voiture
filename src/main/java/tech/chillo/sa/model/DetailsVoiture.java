@@ -1,17 +1,13 @@
-package tech.chillo.sa.entites;
+package tech.chillo.sa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import tech.chillo.sa.entites.Carburant;
+import tech.chillo.sa.entites.Transmission;
 
-@Entity
-@Table(name = "detailsvoiture")
 public class DetailsVoiture {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "idvoiture", referencedColumnName = "id")
-    @JsonIgnore
     Voiture voiture;
     double kilometrage;
     int nbplaces;
@@ -19,11 +15,7 @@ public class DetailsVoiture {
     double etat_interieur;
     double etat_exterieur;
     double consommation;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinColumn(name="idcarburant")
     Carburant carburant;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinColumn(name="idtransmission")
     Transmission transmission;
     double prix;
 
@@ -42,14 +34,6 @@ public class DetailsVoiture {
         this.setPrix(prix);
     }
 
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
     public double getPrix(){return this.prix;}
     public void setPrix(double prix)throws Exception{
         if(prix>=0){
@@ -129,6 +113,31 @@ public class DetailsVoiture {
     public void setTransmission(Transmission transmission) {
         this.transmission = transmission;
     }
+    
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public DetailsVoiture getDetailsVoiture(tech.chillo.sa.entites.DetailsVoiture voiture){
+        DetailsVoiture v = new DetailsVoiture();
+        v.setId(voiture.getId());
+        v.setKilometrage(voiture.getKilometrage());
+        v.setNbplaces(voiture.getNbplaces());
+        v.setNbportes(voiture.getNbportes());
+        v.setEtat_exterieur(voiture.getEtat_exterieur());
+        v.setEtat_interieur(voiture.getEtat_interieur());
+        v.setConsommation(voiture.getConsommation());
+        v.setCarburant(voiture.getCarburant());
+        v.setTransmission(voiture.getTransmission());
+        try {
+            v.setPrix(voiture.getPrix());           
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return v;
+    }
 }
