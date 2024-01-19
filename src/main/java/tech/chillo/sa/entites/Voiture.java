@@ -21,8 +21,8 @@ public class Voiture {
     private Date sortie;
     @OneToOne(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
     private DetailsVoiture detailsVoiture;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
-    private List<Photos> photos;
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
+//    private List<Photos> photos;
     public Voiture(){}
 
     public Voiture(int id, Marque marque, Modele modele, Date sortie, DetailsVoiture ds) {
