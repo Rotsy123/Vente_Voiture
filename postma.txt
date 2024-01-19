@@ -36,3 +36,15 @@
 }
 
 3-http://localhost:8083/api/messagerie?personne1=1&personne2=2 (discussion entre les deux personne)
+
+
+
+creation annonce
+liste annonce personne
+toute les annonces
+Update etat annonce
+Nouvelle annonce 
+notification -> nombre - update etat deja lue
+Nouveau message -> nombre - update etat deja lue
+discussion
+

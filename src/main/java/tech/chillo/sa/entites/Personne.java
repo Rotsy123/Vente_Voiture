@@ -90,4 +90,9 @@ public class Personne {
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
     }
+
+    public void setMotdepasse(String motdepasse1, String motdepasse2) throws Exception{
+        if(motdepasse1.equalsIgnoreCase(motdepasse2)) this.setMotdepasse(motdepasse1); 
+        else throw new Exception("Mot de passe invalide");
+    }
 }
