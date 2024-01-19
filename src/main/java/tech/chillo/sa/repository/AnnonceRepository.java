@@ -1,6 +1,7 @@
 package tech.chillo.sa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -26,5 +27,8 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     Optional<Annonce> getAnnoncesByDatePublicationAndIdpersonne(@Param("datePublication") LocalDateTime datePublication,@Param("idpersonne") int idpersonne);
 
     // List<Annonce> findByPersonneId(int personneId);
+    @Query("SELECT a.bouquet.pourcentage_commission * d.prix / 100 FROM Annonce a JOIN DetailsVoiture d ON a.voiture.id = d.voiture.id JOIN Bouquet b ON b.id = a.bouquet.id WHERE a.id = :idannonce")
+    double prixCommission(@Param("idannonce") int idannonce);
+
 }
 

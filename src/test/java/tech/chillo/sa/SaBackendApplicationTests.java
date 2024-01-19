@@ -1,13 +1,13 @@
 package tech.chillo.sa;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootApplication
-public class SaBackendApplicationTests {
+@SpringBootTest
+class SaBackendApplicationTests {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SaBackendApplicationTests.class, args);
-    }
+	@Test
+	void contextLoads() {
+	}
+
 }
-

@@ -2,6 +2,7 @@ package tech.chillo.sa.entites;
 
 import jakarta.persistence.*;
 import java.util.Date;
+
 @Entity
 @Table(name = "Personne")
 public class Personne {
@@ -28,8 +29,8 @@ public class Personne {
         this.id = id;
     }
 
-      // Getter et Setter pour le champ 'nom'
-      public String getNom() {
+    // Getter et Setter pour le champ 'nom'
+    public String getNom() {
         return nom;
     }
 
