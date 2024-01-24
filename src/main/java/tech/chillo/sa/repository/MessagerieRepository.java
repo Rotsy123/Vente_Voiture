@@ -2,6 +2,9 @@ package tech.chillo.sa.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import tech.chillo.sa.entites.Messagerie;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,8 @@ public interface MessagerieRepository extends MongoRepository<Messagerie, String
 
     long countByEtatAndDestinataire_Id(int etat, int destinataireId);
 
-    @Query("{'id': ?0}")
-    void updateEtat(String id, int nouvelEtat);
+    @Transactional
+    @Modifying
+    @Query("UPDATE Messagerie SET etat = :nouvelEtat WHERE id = :id")
+    void updateEtat(@Param("id") int id, @Param("nouvelEtat") int nouvelEtat);
 }

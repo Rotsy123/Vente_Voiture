@@ -3,7 +3,8 @@ package tech.chillo.sa.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.entites.Annonce;
 import java.time.LocalDateTime;
@@ -25,6 +26,17 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("SELECT a FROM Annonce a where a.datepublication = :datePublication and a.personne.id = :idpersonne")
     Optional<Annonce> getAnnoncesByDatePublicationAndIdpersonne(@Param("datePublication") LocalDateTime datePublication,@Param("idpersonne") int idpersonne);
 
-    // List<Annonce> findByPersonneId(int personneId);
+    List<Annonce> findByEtat(int etat);
+
+    @Query("SELECT COUNT(a.id) FROM Annonce a WHERE a.etat = :etat AND a.personne.id != :idpersonne")
+    long countByEtatAndPersonneNotEqual(@Param("etat") int etat,@Param("idpersonne") int idpersonne);
+
+    List<Annonce> findByEtatAndPersonne_IdNot(int etat, int idpersonne);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Annonce SET etat = :nouvelEtat WHERE id = :id")
+    void updateEtat(@Param("id") int id, @Param("nouvelEtat") int nouvelEtat);
+
 }
 

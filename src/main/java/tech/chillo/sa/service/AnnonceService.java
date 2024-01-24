@@ -49,23 +49,35 @@ public class AnnonceService {
         detailsVoiture.setVoiture(voiture);
         this.detailsVoitureRepository.save(detailsVoiture);
         annonce.setVoiture(voiture);
-        // Optional<Personne> personne = personneRepository.findById(annonce.getPersonne().getId());
-        // if (personne.isPresent()) {
-            // Personne pers = personne.get();
-            // System.out.println(pers.getNom());
-            // System.out.println("Ok");
     
         annonce.setPersonne(request.getAnnonce().getPersonne());
         return this.annoncerepository.save(annonce);
         
     }
 
-    // public Optional<Annonce> getAnnonce(Annonce annonce) {
-    //     System.out.println(annonce.getDateplublication()+" ------------------------ "+annonce.getPersonne().getId());
+    public List<Annonce> getAnnonceByEtat(int etat) {
+        List<Annonce> annconces = this.annoncerepository.findByEtat(etat);
+        // System.out.println(annconces.get(0).getVoiture().getMarque().getNom());
+        return annconces;
+    }
 
-    //     return annoncerepository.getAnnoncesByDatePublicationAndIdpersonne(annonce.getDateplublication(), annonce.getPersonne().getId());
-    // }
+    public List<Annonce> getAnnonceNonLue() {
+        List<Annonce> annconces = this.annoncerepository.findByEtat(0);
+        // System.out.println(annconces.get(0).getVoiture().getMarque().getNom());
+        return annconces;
+    }
     
+    public long getNombreAnnonceNonLue(int idpersonne) {
+        return annoncerepository.countByEtatAndPersonneNotEqual(0, idpersonne);
+    }
 
+    public List<Annonce> getAnnoncesByEtatAndPersonneNotEqual(int idpersonne) {
+        int etat = 0;  // annonce non lu
+        return annoncerepository.findByEtatAndPersonne_IdNot(etat, idpersonne);
+    }
 
+    @Transactional
+    public void updateEtatAnnonce(int id, int nouvelEtat) {
+        annoncerepository.updateEtat(id, nouvelEtat);
+    }
 }

@@ -50,7 +50,7 @@ public class MessagerieService {
     }
 
     @Transactional
-    public void updateEtatMessage(String id, int nouvelEtat) {
+    public void updateEtatMessage(int id, int nouvelEtat) {
         // Optional<Messagerie> message = messagerieRepository.findById(id);
         // if(message.isPresent()) 
         messagerieRepository.updateEtat(id, nouvelEtat);

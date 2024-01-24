@@ -52,11 +52,35 @@ public class AnnonceController {
         return this.bouquetService.GetAllOrderByBouquet();
     }
 
-    public List<Annonces> getAllAnnonces(){
-        return this.annoncesService.getListeAnnonceOrderByBouquet();
+    @GetMapping("/etat")
+    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+        return new ResponseEntity<>(this.bouquetService.getAnnonceByEtat(etat), HttpStatus.OK);
     }
 
-    public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne")int idpersonne){
-        return this.annoncesService.getListeAnnoncePersonneId(idpersonne);
+
+    // public List<Annonces> getAllAnnonces(){
+    //     return this.annoncesService.getListeAnnonceOrderByBouquet();
+    // }
+
+    // @GetMapping("/annonce")
+    // public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne")int idpersonne){
+    //     return this.annoncesService.getListeAnnoncePersonneId(idpersonne);
+    // }
+
+    @GetMapping("/annoncenonlue")
+    public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
+        return this.bouquetService.getAnnoncesByEtatAndPersonneNotEqual(idpersonne);
+    }
+
+    @GetMapping("/nombrenonlue")
+    public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
+        return this.bouquetService.getNombreAnnonceNonLue(idpersonne);
+    }
+
+    @PutMapping("/updateEtat")
+    public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce, 
+                                                @RequestParam("nouvelEtat") int nouvelEtat) {
+        bouquetService.updateEtatAnnonce(idannonce, nouvelEtat);
+        return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
     }
 }

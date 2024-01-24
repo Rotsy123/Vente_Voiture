@@ -43,7 +43,7 @@ public class MessagerieController {
     }
 
     @PutMapping("/updateEtat")
-    public ResponseEntity<String> updateEtatMessage(@RequestParam("messageId") String messageId, 
+    public ResponseEntity<String> updateEtatMessage(@RequestParam("messageId") int messageId, 
                                                 @RequestParam("nouvelEtat") int nouvelEtat) {
         messagerieService.updateEtatMessage(messageId, nouvelEtat);
         return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
