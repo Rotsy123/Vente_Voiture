@@ -51,7 +51,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     int countByPersonneIdAndEtat(int idpersonne, int etat);
 
     @Query("SELECT a FROM Annonce a WHERE MONTH(a.datepublication) = :mois AND YEAR(a.datepublication) = :annee and etat = 10")
-    Annonce findAnnonceByMonthAndYearAndEtat(@Param("mois") int mois, @Param("mois") int annee);
+    List<Annonce> findAnnonceByMonthAndYearAndEtat(@Param("mois") int mois, @Param("annee") int annee);
 
 }
 

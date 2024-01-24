@@ -16,6 +16,9 @@ public class StatistiqueComission {
         this.setMois(mois);
     }
 
+    public StatistiqueComission() {}
+
+
     public void setPrix(double prix){
         this.prix = prix;
     }

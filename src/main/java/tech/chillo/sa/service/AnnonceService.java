@@ -6,10 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import tech.chillo.sa.controller.AnnonceCreationRequest;
 import tech.chillo.sa.entites.*;
 import tech.chillo.sa.repository.*;
+import tech.chillo.sa.model.StatistiqueComission;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -92,8 +94,25 @@ public class AnnonceService {
         return annoncerepository.countByPersonneIdAndEtat(idpersonne,10);
     }
 
-    public StatistiqueComission getStatistiqueComission(int annee){
-        List<StatistiqueComission> statistiqueComission = ArrayList
-        findAnnonceByMonthAndYearAndEtat
+    public List<StatistiqueComission> getStatistiqueComission(int annee){
+        List<StatistiqueComission> statistiqueComissions = new ArrayList<StatistiqueComission>();
+        for(int i=1; i< 13; i++) {
+            StatistiqueComission statistiqueComission = new StatistiqueComission();
+            statistiqueComission.setAnnee(annee);
+            statistiqueComission.setMois(i);
+            statistiqueComission.setPrix(getComission(i,annee));
+            statistiqueComissions.add(statistiqueComission);
+        }
+        return statistiqueComissions;
+    }
+
+    public double getComission (int mois, int annee) {
+        double rep =0;
+        List<Annonce> list =  annoncerepository.findAnnonceByMonthAndYearAndEtat(mois,annee);
+        for(int i=0; i<list.size(); i++) {
+            rep = rep+ annoncerepository.prixCommission(list.get(i).getId());
+        }
+        return rep;
+
     }
 }

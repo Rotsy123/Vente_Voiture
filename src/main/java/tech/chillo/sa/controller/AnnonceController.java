@@ -7,6 +7,7 @@ import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Bouquet;
 import tech.chillo.sa.entites.DetailsVoiture;
 import tech.chillo.sa.entites.Voiture;
+import tech.chillo.sa.model.StatistiqueComission;
 import tech.chillo.sa.entites.Annonces;
 import tech.chillo.sa.service.AnnonceService;
 import tech.chillo.sa.service.BouquetService;
@@ -86,7 +87,11 @@ public class AnnonceController {
     public long getNombreAnnoncePersonne(@RequestParam("idpersonne")int idpersonne){
         return this.bouquetService.getNombreAnnoncePersonne(idpersonne);
     }
-
+    
+    @GetMapping("/statistique")
+    public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
+        return this.bouquetService.getStatistiqueComission(annee);
+    }
     
     // public List<Annonces> getAllAnnonces() {
     //     return this.annoncesService.getListeAnnonceOrderByBouquet();
