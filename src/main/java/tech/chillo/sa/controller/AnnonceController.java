@@ -17,40 +17,38 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
 @RestController
 @RequestMapping(path = "annonce")
 public class AnnonceController {
     private AnnonceService bouquetService;
-    private AnnoncesService annoncesService;
+    // private AnnoncesService annoncesService;
 
-    public AnnonceController(AnnonceService bouquetService,AnnoncesService annoncesService) {
+    public AnnonceController(AnnonceService bouquetService) {
         this.bouquetService = bouquetService;
-        this.annoncesService = annoncesService;
+        // this.annoncesService = annoncesService;
     }
 
+    // @ResponseStatus(value = HttpStatus.CREATED)
+    // @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    // public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
+    //     Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
+    //     return new ResponseEntity<>(annoncesService.saveAnnonces(annonceOptional), HttpStatus.OK);
+    // }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
-        Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
-        return new ResponseEntity<>(annoncesService.saveAnnonces(annonceOptional), HttpStatus.OK);
-    }
+    // @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    // public List<Voiture> findById(@PathVariable int id) {
+    //     return this.annoncesService.GetByIdPersonne(id);
+    // }
 
-    @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
-    public List<Voiture> findById(@PathVariable int id) {
-        return this.bouquetService.GetByIdPersonne(id);
-    }
+    // @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
+    // public List<Annonce> findByIdPersonne(@PathVariable int idpersonne) {
+    //     return this.annoncesService.GetAllOfPersonne(idpersonne);
+    // }
 
-    @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
-    public List<Annonce> findByIdPersonne(@PathVariable int idpersonne) {
-        return this.bouquetService.GetAllOfPersonne(idpersonne);
-    }
-
-    @GetMapping(produces=APPLICATION_JSON_VALUE)
-    public List<Annonce> getAll(){
-        return this.bouquetService.GetAllOrderByBouquet();
-    }
+    // @GetMapping(produces = APPLICATION_JSON_VALUE)
+    // public List<Annonce> getAll() {
+    //     return this.annoncesService.GetAllOrderByBouquet();
+    // }
 
     @GetMapping("/etat")
     public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
@@ -83,4 +81,31 @@ public class AnnonceController {
         bouquetService.updateEtatAnnonce(idannonce, nouvelEtat);
         return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
     }
+    
+    @GetMapping("/nombreAnnoncePersonne")
+    public long getNombreAnnoncePersonne(@RequestParam("idpersonne")int idpersonne){
+        return this.bouquetService.getNombreAnnoncePersonne(idpersonne);
+    }
+
+    
+    // public List<Annonces> getAllAnnonces() {
+    //     return this.annoncesService.getListeAnnonceOrderByBouquet();
+    // }
+
+    // public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne") int idpersonne) {
+    //     return this.annoncesService.getListeAnnoncePersonneId(idpersonne);
+    // }
+
+    // http://localhost:8080/api/annonces/update?etat=1&idannonce=1
+    // @PostMapping("/update")
+    // public ResponseEntity<String> updateAnnonce(@RequestParam int etat, @RequestParam int idannonce) {
+    //     // Appel de votre service pour mettre à jour l'annonce
+    //     try {
+    //         this.annoncesService.UpdateEtat(etat, idannonce);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return ResponseEntity.ok("Annonce mise à jour avec succès");
+    // }
+
 }

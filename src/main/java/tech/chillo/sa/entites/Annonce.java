@@ -37,6 +37,14 @@ public class Annonce {
         setEtat(etat);
     }
 
+    public LocalDateTime getDatepublication() {
+        return datepublication;
+    }
+
+    public void setDatepublication(LocalDateTime datepublication) {
+        this.datepublication = datepublication;
+    }
+
     public Bouquet getBouquet() {
         return bouquet;
     }

@@ -1,6 +1,7 @@
 package tech.chillo.sa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,5 +41,17 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 
     @Query("SELECT COUNT(a.id) FROM Annonce a WHERE a.etat = :etat AND a.personne.id = :idpersonne")
     int countByEtatAndPersonne(@Param("etat") int etat,@Param("idpersonne") int idpersonne);
+
+    // List<Annonce> findByPersonneId(int personneId);
+    @Query("SELECT a.bouquet.pourcentage_commission * d.prix / 100 FROM Annonce a JOIN DetailsVoiture d ON a.voiture.id = d.voiture.id JOIN Bouquet b ON b.id = a.bouquet.id WHERE a.id = :idannonce")
+    double prixCommission(@Param("idannonce") int idannonce);
+
+    int countByPersonneId(int idpersonne);
+
+    int countByPersonneIdAndEtat(int idpersonne, int etat);
+
+    @Query("SELECT a FROM Annonce a WHERE MONTH(a.datepublication) = :mois AND YEAR(a.datepublication) = :annee and etat = 10")
+    Annonce findAnnonceByMonthAndYearAndEtat(@Param("mois") int mois, @Param("mois") int annee);
+
 }
 

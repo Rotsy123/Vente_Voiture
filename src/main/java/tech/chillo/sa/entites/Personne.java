@@ -2,6 +2,7 @@ package tech.chillo.sa.entites;
 
 import jakarta.persistence.*;
 import java.util.Date;
+
 @Entity
 @Table(name = "Personne")
 public class Personne {
@@ -28,8 +29,8 @@ public class Personne {
         this.id = id;
     }
 
-      // Getter et Setter pour le champ 'nom'
-      public String getNom() {
+    // Getter et Setter pour le champ 'nom'
+    public String getNom() {
         return nom;
     }
 
@@ -89,5 +90,10 @@ public class Personne {
 
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
+    }
+
+    public void setMotdepasse(String motdepasse1, String motdepasse2) throws Exception{
+        if(motdepasse1.equalsIgnoreCase(motdepasse2)) this.setMotdepasse(motdepasse1); 
+        else throw new Exception("Mot de passe invalide");
     }
 }
