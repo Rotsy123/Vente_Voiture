@@ -7,23 +7,26 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name="voiture")
+@Table(name = "voiture")
 public class Voiture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "idmarque")
     private Marque marque;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "idmodele")
     private Modele modele;
     private Date sortie;
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "voiture", cascade = CascadeType.MERGE)
     private DetailsVoiture detailsVoiture;
-    //@OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade = CascadeType.MERGE)
-    //private List<Photos> photos;
-    public Voiture(){}
+
+    // @OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade =
+    // CascadeType.MERGE)
+    // private List<Photos> photos;
+    public Voiture() {
+    }
 
     public Voiture(int id, Marque marque, Modele modele, Date sortie, DetailsVoiture ds) {
         this.setId(id);
@@ -32,12 +35,14 @@ public class Voiture {
         this.setSortie(sortie);
         this.setDetailsVoiture(ds);
     }
+
     public Voiture(int id, Marque marque, Modele modele, Date sortie) {
         this.setId(id);
         this.setMarque(marque);
         this.setModele(modele);
         this.setSortie(sortie);
     }
+
     public DetailsVoiture getDetailsVoiture() {
         return detailsVoiture;
     }
@@ -48,6 +53,7 @@ public class Voiture {
             detailsVoiture.setVoiture(this);
         }
     }
+
     public int getId() {
         return id;
     }

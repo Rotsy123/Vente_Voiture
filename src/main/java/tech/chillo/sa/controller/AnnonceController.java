@@ -17,18 +17,16 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
 @RestController
 @RequestMapping(path = "annonce")
 public class AnnonceController {
     private AnnonceService bouquetService;
     private AnnoncesService annoncesService;
 
-    public AnnonceController(AnnonceService bouquetService,AnnoncesService annoncesService) {
+    public AnnonceController(AnnonceService bouquetService, AnnoncesService annoncesService) {
         this.bouquetService = bouquetService;
         this.annoncesService = annoncesService;
     }
-
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
@@ -39,24 +37,37 @@ public class AnnonceController {
 
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public List<Voiture> findById(@PathVariable int id) {
-        return this.bouquetService.GetByIdPersonne(id);
+        return this.annoncesService.GetByIdPersonne(id);
     }
 
     @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
     public List<Annonce> findByIdPersonne(@PathVariable int idpersonne) {
-        return this.bouquetService.GetAllOfPersonne(idpersonne);
+        return this.annoncesService.GetAllOfPersonne(idpersonne);
     }
 
-    @GetMapping(produces=APPLICATION_JSON_VALUE)
-    public List<Annonce> getAll(){
-        return this.bouquetService.GetAllOrderByBouquet();
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public List<Annonce> getAll() {
+        return this.annoncesService.GetAllOrderByBouquet();
     }
 
-    public List<Annonces> getAllAnnonces(){
+    public List<Annonces> getAllAnnonces() {
         return this.annoncesService.getListeAnnonceOrderByBouquet();
     }
 
-    public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne")int idpersonne){
+    public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne") int idpersonne) {
         return this.annoncesService.getListeAnnoncePersonneId(idpersonne);
     }
+
+    // http://localhost:8080/api/annonces/update?etat=1&idannonce=1
+    @PostMapping("/update")
+    public ResponseEntity<String> updateAnnonce(@RequestParam int etat, @RequestParam int idannonce) {
+        // Appel de votre service pour mettre à jour l'annonce
+        try {
+            this.annoncesService.UpdateEtat(etat, idannonce);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok("Annonce mise à jour avec succès");
+    }
+
 }

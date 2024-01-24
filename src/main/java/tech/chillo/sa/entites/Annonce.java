@@ -19,6 +19,7 @@ public class Annonce {
     @JoinColumn(name = "idbouquet")
     private Bouquet bouquet;
     private LocalDateTime datepublication;
+    private int etat;
 
     public Annonce(){}
     public Annonce(int id, Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication){
@@ -33,6 +34,22 @@ public class Annonce {
         setPersonne(personne);
         setBouquet(bouquet);
         setDateplublication(datepublication);
+    }
+
+    public LocalDateTime getDatepublication() {
+        return datepublication;
+    }
+
+    public void setDatepublication(LocalDateTime datepublication) {
+        this.datepublication = datepublication;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
     public Bouquet getBouquet() {
