@@ -38,5 +38,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("UPDATE Annonce SET etat = :nouvelEtat WHERE id = :id")
     void updateEtat(@Param("id") int id, @Param("nouvelEtat") int nouvelEtat);
 
+    @Query("SELECT COUNT(a.id) FROM Annonce a WHERE a.etat = :etat AND a.personne.id = :idpersonne")
+    int countByEtatAndPersonne(@Param("etat") int etat,@Param("idpersonne") int idpersonne);
 }
 

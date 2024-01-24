@@ -80,4 +80,6 @@ public class AnnonceService {
     public void updateEtatAnnonce(int id, int nouvelEtat) {
         annoncerepository.updateEtat(id, nouvelEtat);
     }
+
+    // public 
 }

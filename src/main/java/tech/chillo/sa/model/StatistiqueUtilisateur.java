@@ -2,8 +2,7 @@ package tech.chillo.sa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import tech.chillo.sa.entites.Carburant;
-import tech.chillo.sa.entites.Transmission;
+import tech.chillo.sa.entites.Personne;
 
 public class StatistiqueUtilisateur {
     private Personne personne;

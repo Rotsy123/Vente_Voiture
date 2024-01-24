@@ -6,38 +6,38 @@ import tech.chillo.sa.entites.Carburant;
 import tech.chillo.sa.entites.Transmission;
 
 public class StatistiqueComission {
-    private Personne personne;
-    private int nombre_annonce;
-    private int nombre_annonce_vendu;
+    private int annee;
+    private int mois;
+    private double prix;
 
-    public StatistiqueComission(Personne personne, int nombre_annonce, int nombre_annonce_vendu) {
-        this.setPersonne(personne);
-        this.setNombre_annonce(nombre_annonce);
-        this.setNombre_annonce_vendu(nombre_annonce_vendu);
+    public StatistiqueComission(int annee, int mois, double prix) {
+        this.setPrix(prix);
+        this.setAnnee(annee);
+        this.setMois(mois);
     }
 
-    public void setPersonne(Personne personne){
-        this.personne = personne;
+    public void setPrix(double prix){
+        this.prix = prix;
     }
 
-    public void setNombre_annonce(int nombre_annonce){
-        this.nombre_annonce = nombre_annonce;
+    public void setAnnee(int annee){
+        this.annee = annee;
     }
 
-    public void setNombre_annonce_vendu(int nombre_annonce_vendu){
-        this.nombre_annonce_vendu = nombre_annonce_vendu;
+    public void setMois(int mois){
+        this.mois = mois;
     }
 
-    public Personne getPersonne(){
-        return this.personne;
+    public double getPrix(){
+        return this.prix;
     }
 
-    public int getNombre_annonce(){
-        return this.nombre_annonce;
+    public int getAnnee(){
+        return this.annee;
     }
 
-    public int getNombre_annonce_vendu(){
-        return this.nombre_annonce_vendu;
+    public int getMois(){
+        return this.mois;
     }
 
 
