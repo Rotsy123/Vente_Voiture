@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import tech.chillo.sa.entites.Personne;
+import tech.chillo.sa.model.StatistiqueUtilisateur;
 import tech.chillo.sa.service.PersonneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +43,9 @@ public class PersonneController {
 
     //     return new ResponseEntity<>(annoncesService.saveAnnonces(annonceOptional), HttpStatus.OK);
     // }
+
+    @GetMapping("/statistique")
+    public StatistiqueUtilisateur getStatistiqueUtilisateur(@RequestParam("idpersonne")int idpersonne){
+        return this.personneService.getStatistiqueUtilisateur(idpersonne);
+    }
 }

@@ -83,6 +83,17 @@ public class AnnonceService {
     public void updateEtatAnnonce(int id, int nouvelEtat) {
         annoncerepository.updateEtat(id, nouvelEtat);
     }
+    
+    public int getNombreAnnoncePersonne(int idpersonne) {
+        return annoncerepository.countByPersonneId(idpersonne);
+    }
+    
+    public int getNombreAnnonceVenduPersonne(int idpersonne) {
+        return annoncerepository.countByPersonneIdAndEtat(idpersonne,10);
+    }
 
-    // public 
+    public StatistiqueComission getStatistiqueComission(int annee){
+        List<StatistiqueComission> statistiqueComission = ArrayList
+        findAnnonceByMonthAndYearAndEtat
+    }
 }

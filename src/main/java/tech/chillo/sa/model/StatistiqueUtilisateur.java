@@ -39,6 +39,6 @@ public class StatistiqueUtilisateur {
         return this.nombre_annonce_vendu;
     }
 
-
+    public StatistiqueUtilisateur() {}
 
 }
