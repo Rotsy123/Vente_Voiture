@@ -29,12 +29,12 @@ public class AnnonceController {
         // this.annoncesService = annoncesService;
     }
 
-    // @ResponseStatus(value = HttpStatus.CREATED)
-    // @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
-    //     Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
-    //     return new ResponseEntity<>(annoncesService.saveAnnonces(annonceOptional), HttpStatus.OK);
-    // }
+     @ResponseStatus(value = HttpStatus.CREATED)
+     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+     public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
+         Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
+         return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
+     }
 
     // @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     // public List<Voiture> findById(@PathVariable int id) {
@@ -102,15 +102,15 @@ public class AnnonceController {
     // }
 
     // http://localhost:8080/api/annonces/update?etat=1&idannonce=1
-    // @PostMapping("/update")
-    // public ResponseEntity<String> updateAnnonce(@RequestParam int etat, @RequestParam int idannonce) {
-    //     // Appel de votre service pour mettre à jour l'annonce
-    //     try {
-    //         this.annoncesService.UpdateEtat(etat, idannonce);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return ResponseEntity.ok("Annonce mise à jour avec succès");
-    // }
+//     @PostMapping("/update")
+//     public ResponseEntity<String> updateAnnonce(@RequestParam int etat, @RequestParam int idannonce) {
+//         // Appel de votre service pour mettre à jour l'annonce
+//         try {
+//             this.annoncesService.UpdateEtat(etat, idannonce);
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
+//         return ResponseEntity.ok("Annonce mise à jour avec succès");
+//     }
 
 }
