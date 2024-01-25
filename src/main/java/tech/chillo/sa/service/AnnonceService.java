@@ -62,13 +62,11 @@ public class AnnonceService {
 
     public List<Annonce> getAnnonceByEtat(int etat) {
         List<Annonce> annconces = this.annoncerepository.findByEtat(etat);
-        // System.out.println(annconces.get(0).getVoiture().getMarque().getNom());
         return annconces;
     }
 
     public List<Annonce> getAnnonceNonLue() {
         List<Annonce> annconces = this.annoncerepository.findByEtat(0);
-        // System.out.println(annconces.get(0).getVoiture().getMarque().getNom());
         return annconces;
     }
     
@@ -77,13 +75,18 @@ public class AnnonceService {
     }
 
     public List<Annonce> getAnnoncesByEtatAndPersonneNotEqual(int idpersonne) {
-        int etat = 0;  // annonce non lu
+        int etat = 5;
         return annoncerepository.findByEtatAndPersonne_IdNot(etat, idpersonne);
     }
 
     @Transactional
     public void updateEtatAnnonce(int id, int nouvelEtat) {
         annoncerepository.updateEtat(id, nouvelEtat);
+    }
+
+    @Transactional
+    public void Validation(int id){
+        annoncerepository.Validation(id);
     }
     
     public int getNombreAnnoncePersonne(int idpersonne) {

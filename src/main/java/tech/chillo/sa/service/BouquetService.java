@@ -1,6 +1,7 @@
 package tech.chillo.sa.service;
 
 import tech.chillo.sa.entites.Bouquet;
+import tech.chillo.sa.entites.Marque;
 import tech.chillo.sa.repository.BouquetRepository;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,9 @@ public class BouquetService {
     }
     public Optional<Bouquet> findById(int id){
         return this.bouquetRepository.findById(id);
+    }
+    public void Creer(Bouquet bouquet){
+        this.bouquetRepository.save(bouquet);
     }
 
 }

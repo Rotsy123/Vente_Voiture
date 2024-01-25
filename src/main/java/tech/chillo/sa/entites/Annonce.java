@@ -19,24 +19,29 @@ public class Annonce {
     @JoinColumn(name = "idbouquet")
     private Bouquet bouquet;
     private LocalDateTime datepublication;
-    private int etat=0;
+    private int etat = 0;
+    private LocalDateTime datevalidation = null;
 
     public Annonce(){}
-    public Annonce(int id, Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat){
+    public Annonce(int id, Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat, LocalDateTime datevalidation){
         setId(id);
         setVoiture(voiture);
         setPersonne(personne);
         setBouquet(bouquet);
         setDateplublication(datepublication);
+        setDatevalidation(datevalidation);
     }
-    public Annonce(Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat){
+    public Annonce(Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat, LocalDateTime datevalidation){
         setVoiture(voiture);
         setPersonne(personne);
         setBouquet(bouquet);
         setDateplublication(datepublication);
         setEtat(etat);
+        setDatevalidation(datevalidation);
     }
 
+    public LocalDateTime getDatevalidation(){return datevalidation;}
+    public void setDatevalidation(LocalDateTime datevalidation){this.datevalidation = datevalidation;}
     public LocalDateTime getDatepublication() {
         return datepublication;
     }

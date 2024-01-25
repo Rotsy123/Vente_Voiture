@@ -21,7 +21,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id WHERE a.personne.id = :idpersonne order by bouquet.pourcentage_commission desc")
     List<Annonce> findByPersonneId(@Param("idpersonne") int idpersonne);
 
-    @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id order by bouquet.pourcentage_commission desc")
+    @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id where a.etat>=5 order by bouquet.pourcentage_commission desc")
     List<Annonce> GetAllAnnonceOrderByBouquet();
 
     @Query("SELECT a FROM Annonce a where a.datepublication = :datePublication and a.personne.id = :idpersonne")
@@ -38,6 +38,12 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Modifying
     @Query("UPDATE Annonce SET etat = :nouvelEtat WHERE id = :id")
     void updateEtat(@Param("id") int id, @Param("nouvelEtat") int nouvelEtat);
+
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Annonce SET datevalidation = current_timestamp WHERE id = :id")
+    void Validation(@Param("id") int id);
 
     @Query("SELECT COUNT(a.id) FROM Annonce a WHERE a.etat = :etat AND a.personne.id = :idpersonne")
     int countByEtatAndPersonne(@Param("etat") int etat,@Param("idpersonne") int idpersonne);

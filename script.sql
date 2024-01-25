@@ -83,9 +83,9 @@ create table personne(
     dtn Date
 );
 
-insert into personne(nom, prenom, contact, email, dtn) values
-('RAKOTONDRAINY', 'Rotsy', '0345770369','rakotondrainyrotsy@gmail.com','2003-10-17'),
-('RAKOTONDRAINY', 'Miasy', '0345770369','rakotondrainyMiasy@gmail.com','2003-10-18');
+insert into personne(nom, prenoms,  mail, datedenaissance, adresse, motdepasse, telephone) values
+('RAKOTONDRAINY', 'Rotsy', 'rakotondrainyrotsy@gmail.com','2003-10-17', 'Logt 432 Cite','123','0340000000'),
+('RAKOTONDRAINY', 'Miasy', 'rakotondrainyMiasy@gmail.com','2003-10-18', 'Logt 432 Cite','456','0340000000');
 
 insert into carburant(nom) values ('gasoil'), ('essence');
 insert into transmission(nom) values ('boite automatique'), ('boite semie-automatique'),('boite manuelle');
