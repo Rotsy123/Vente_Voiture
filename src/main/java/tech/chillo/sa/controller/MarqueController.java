@@ -2,10 +2,7 @@ package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Marque;
 import tech.chillo.sa.entites.Voiture;
@@ -15,6 +12,9 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+
+@RestController
+@RequestMapping(path = "marque")
 public class MarqueController {
     private MarqueService marqueService;
 

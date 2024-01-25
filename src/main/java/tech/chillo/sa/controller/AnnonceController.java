@@ -29,7 +29,7 @@ public class AnnonceController {
         // this.annoncesService = annoncesService;
     }
 
-     @ResponseStatus(value = HttpStatus.CREATED)
+//     @ResponseStatus(value = HttpStatus.CREATED)
      @PostMapping()
      public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
          Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
