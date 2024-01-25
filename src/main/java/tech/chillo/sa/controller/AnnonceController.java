@@ -30,7 +30,7 @@ public class AnnonceController {
     }
 
      @ResponseStatus(value = HttpStatus.CREATED)
-     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+     @PostMapping()
      public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
          Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
          return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
