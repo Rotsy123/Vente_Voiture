@@ -83,9 +83,43 @@ create table personne(
     dtn Date
 );
 
-insert into personne(nom, prenom, contact, email, dtn) values
-('RAKOTONDRAINY', 'Rotsy', '0345770369','rakotondrainyrotsy@gmail.com','2003-10-17'),
-('RAKOTONDRAINY', 'Miasy', '0345770369','rakotondrainyMiasy@gmail.com','2003-10-18');
+create table personne(
+    id serial primary key,
+    nom varchar(50),
+    prenoms varchar(100),
+    datedenaissance date,
+    mail varchar(100),
+    telephone varchar(10),
+    adresse varchar(100),
+    motdepasse varchar(50)
+);
+
+create table historique(
+    idannonce int, 
+    idbouquet int,
+    datedebut date,
+    datefin date,
+    FOREIGN KEY(idbouquet) REFERENCES bouquet(id),
+    FOREIGN KEY (idannonce) REFERENCES annonce(id)
+);
+
+
+create table annonce(
+    id serial primary key,
+    idvoiture int,
+    idpersonne int, 
+    datepublication timestamp,
+    idbouquet int,
+    FOREIGN KEY(idvoiture) REFERENCES voiture(id),
+    FOREIGN KEY(idbouquet) REFERENCES bouquet(id),
+    FOREIGN KEY(idpersonne) REFERENCES personne(id)
+);
+ALTER TABLE ANNONCE ADD COLUMN ETAT int;
+
+
+insert into personne(nom, prenoms,  mail, datedenaissance, adresse, motdepasse, telephone) values
+('RAKOTONDRAINY', 'Rotsy', 'rakotondrainyrotsy@gmail.com','2003-10-17', 'Logt 432 Cite','123','0340000000'),
+('RAKOTONDRAINY', 'Miasy', 'rakotondrainyMiasy@gmail.com','2003-10-18', 'Logt 432 Cite','456','0340000000');
 
 insert into carburant(nom) values ('gasoil'), ('essence');
 insert into transmission(nom) values ('boite automatique'), ('boite semie-automatique'),('boite manuelle');
@@ -132,16 +166,7 @@ insert into bouquet (nom, pourcentage_commission) values
 ('bouquet4',30);
 
 
-create table personne(
-    id serial primary key,
-    nom varchar(50),
-    prenoms varchar(100),
-    datedenaissance date,
-    mail varchar(100),
-    telephone varchar(10),
-    adresse varchar(100),
-    motdepasse varchar(50)
-);
+
 INSERT INTO personne (nom, prenoms, datedenaissance, mail, telephone, adresse, motdepasse)
 VALUES
   ('Doe', 'John', '1990-01-15', 'john.doe@email.com', '1234567890', '123 Main St, City', 'motdepasse123'),
