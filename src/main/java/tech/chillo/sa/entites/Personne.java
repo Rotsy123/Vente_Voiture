@@ -18,7 +18,6 @@ public class Personne {
     private String mail;
     private String telephone;
     private String adresse;
-    private String motdepasse;
 
     public Personne() {
     }
@@ -31,7 +30,6 @@ public class Personne {
         this.id = id;
     }
 
-    // Getter et Setter pour le champ 'nom'
     public String getNom() {
         return nom;
     }
@@ -40,7 +38,6 @@ public class Personne {
         this.nom = nom;
     }
 
-    // Getter et Setter pour le champ 'prenoms'
     public String getPrenoms() {
         return prenoms;
     }
@@ -49,7 +46,6 @@ public class Personne {
         this.prenoms = prenoms;
     }
 
-    // Getter et Setter pour le champ 'datedenaissance'
     public Date getDatedenaissance() {
         return datedenaissance;
     }
@@ -58,7 +54,6 @@ public class Personne {
         this.datedenaissance = datedenaissance;
     }
 
-    // Getter et Setter pour le champ 'mail'
     public String getMail() {
         return mail;
     }
@@ -67,7 +62,6 @@ public class Personne {
         this.mail = mail;
     }
 
-    // Getter et Setter pour le champ 'telephone'
     public String getTelephone() {
         return telephone;
     }
@@ -76,7 +70,6 @@ public class Personne {
         this.telephone = telephone;
     }
 
-    // Getter et Setter pour le champ 'adresse'
     public String getAdresse() {
         return adresse;
     }
@@ -85,17 +78,5 @@ public class Personne {
         this.adresse = adresse;
     }
 
-    // Getter et Setter pour le champ 'motdepasse'
-    public String getMotdepasse() {
-        return motdepasse;
-    }
 
-    public void setMotdepasse(String motdepasse) {
-        this.motdepasse = motdepasse;
-    }
-
-    // public void setMotdepasse(String motdepasse1, String motdepasse2) throws Exception{
-    //     if(motdepasse1.equalsIgnoreCase(motdepasse2)) this.setMotdepasse(motdepasse1); 
-    //     else throw new Exception("Mot de passe invalide");
-    // }
 }

@@ -53,10 +53,17 @@ public class PersonneController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    // @GetMapping(produces = APPLICATION_JSON_VALUE)
-    // public String hello (){
-    // return "Hello";
-    // }
+//    @GetMapping(produces = APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Object> checkPersonne(
+//            @RequestParam("mail") String mail,
+//            @RequestParam("motdepasse") String motdepasse) {
+//        try {
+////            Personne personne = personneService.connected(mail, motdepasse);
+////            return new ResponseEntity<>(personne, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     // @ResponseStatus(value = HttpStatus.CREATED)
     // @PostMapping(consumes = APPLICATION_JSON_VALUE)

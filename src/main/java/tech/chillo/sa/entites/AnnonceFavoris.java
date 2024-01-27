@@ -2,7 +2,6 @@ package tech.chillo.sa.entites;
 
 
 import jakarta.persistence.*;
-import tech.chillo.sa.service.AnnonceService;
 
 @Entity
 @Table(name = "favoris")
@@ -49,5 +48,24 @@ public class AnnonceFavoris {
 
     public void setAnnonce(Annonce annonce) {
         this.annonce = annonce;
+    }
+
+    @Entity
+    @Table(name = "historique")
+    public static class Historique {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int id;
+
+        // Other Historique fields
+
+        @ManyToOne
+        @JoinColumn(name = "annonce")
+        private Annonce annonce;
+
+        @ManyToOne
+        @JoinColumn(name = "bouquet")
+        private Bouquet bouquet;
+
     }
 }

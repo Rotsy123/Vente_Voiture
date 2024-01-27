@@ -79,25 +79,5 @@ public class PersonneService {
         return statistiqueUtilisateur;
     }
 
-    // @Override
-    // public UserDetails loadUserByUsername (String username) throws
-    // UsernameNotFoundException {
-    // return this.personneRepository
-    // .findByMail(username)
-    // .orElseThrow(() -> new UsernameNotFoundException("aucun user
-    // correspondant"));
-    // }
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Optional<Personne> personneOptional = personneRepository.findByMail(username);
-//
-//        return personneOptional.map(personne -> {
-//            return org.springframework.security.core.userdetails.User.withUsername(personne.getMail())
-//                    .password(personne.getMotdepasse())
-//                    .roles("USER") // Définir les rôles de l'utilisateur, si nécessaire
-//                    .build();
-//        }).orElseThrow(
-//                () -> new UsernameNotFoundException("Aucun utilisateur trouvé avec l'adresse e-mail: " + username));
-//    }
 
 }

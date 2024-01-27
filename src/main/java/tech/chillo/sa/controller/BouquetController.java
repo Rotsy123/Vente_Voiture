@@ -1,7 +1,9 @@
 package tech.chillo.sa.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Bouquet;
+import tech.chillo.sa.entites.Marque;
 import tech.chillo.sa.service.BouquetService;
 
 import java.util.List;
@@ -21,6 +23,12 @@ public class BouquetController {
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Bouquet> rechercher() {
         return this.bouquetService.findAll();
+    }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public void create(@RequestBody Bouquet bouquet) {
+        bouquetService.Creer(bouquet);
     }
 
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
