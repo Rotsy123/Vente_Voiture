@@ -28,6 +28,12 @@ public class Historique {
         this.datedebut = datedebut;
         this.datefin = datefin;
     }
+    public Historique(Annonce annonce, Bouquet bouquet, LocalDateTime datedebut, LocalDateTime datefin) {
+        this.annonce = annonce;
+        this.bouquet = bouquet;
+        this.datedebut = datedebut;
+        this.datefin = datefin;
+    }
 
     public Historique( ) {
     }

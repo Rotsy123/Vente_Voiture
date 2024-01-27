@@ -28,8 +28,8 @@ public class AnnonceService {
     private ModeleRepository modeleRepository;
     private PersonneRepository personneRepository;
     private BouquetRepository bouquetRepository;
-
-    public AnnonceService(BouquetRepository bouquetRepository,AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr, PersonneRepository personneRepository){
+    private HistoriqueRepository historiqueRepository;
+    public AnnonceService(HistoriqueRepository historiqueRepository, BouquetRepository bouquetRepository,AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr, PersonneRepository personneRepository){
         this.annoncerepository = annoncerepository;
         this.voitureRepository = vp;
         this.detailsVoitureRepository = dvp;
@@ -37,6 +37,16 @@ public class AnnonceService {
         this.modeleRepository = mdr;
         this.personneRepository = personneRepository;
         this.bouquetRepository = bouquetRepository;
+        this.historiqueRepository = historiqueRepository;
+    }
+    public void DeleteAnnonce(int id){
+        List<Historique> historiques = this.historiqueRepository.findByAnnonce(id);
+        for(int i=0; i<historiques.size(); i++){
+            this.historiqueRepository.delete(historiques.get(i));
+        }
+        Optional <Annonce> optionalannonce = this.annoncerepository.findById(id);
+        Annonce annonce = optionalannonce.orElse(null);
+        this.annoncerepository.delete(annonce);
     }
     public Bouquet getBouquetById(int id) {
         Optional<Bouquet> optionalBouquet = bouquetRepository.findById(id);

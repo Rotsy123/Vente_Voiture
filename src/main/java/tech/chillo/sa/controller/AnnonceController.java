@@ -16,7 +16,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "annonce")
 public class AnnonceController {
     private AnnonceService annonceService;
-
     public AnnonceController(AnnonceService bouquetService) {
         this.annonceService = bouquetService;
     }
@@ -61,7 +60,10 @@ public class AnnonceController {
 //    public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
 //        return this.annonceService.getNombreAnnonceNonLue(idpersonne);
 //    }
-
+    @DeleteMapping("/deleteannonce")
+    public void DeleteAnnonce(@RequestParam("idannonce") int idannonce){
+        this.annonceService.DeleteAnnonce(idannonce);
+    }
     @PutMapping("/updateEtat")
     public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce,
                                                 @RequestParam("nouvelEtat") int nouvelEtat) {
