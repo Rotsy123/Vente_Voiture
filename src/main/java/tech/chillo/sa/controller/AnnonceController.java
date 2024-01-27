@@ -32,10 +32,10 @@ public class AnnonceController {
          return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
      }
 
-     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
-     public List<Voiture> findById(@PathVariable int id) {
-         return this.annonceService.GetByIdPersonne(id);
-     }
+//     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+//     public List<Annonce> findById(@PathVariable int id) {
+//         return this.annonceService.GetByIdPersonne(id);
+//     }
 
      @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
      public List<Annonce> findByIdPersonne(@PathVariable int idpersonne) {
@@ -63,40 +63,25 @@ public class AnnonceController {
 //    }
 
     @PutMapping("/updateEtat")
-    public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce, 
+    public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce,
                                                 @RequestParam("nouvelEtat") int nouvelEtat) {
         this.annonceService.updateEtatAnnonce(idannonce, nouvelEtat);
         return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
     }
-    
+
     @GetMapping("/nombreAnnoncePersonne")
     public long getNombreAnnoncePersonne(@RequestParam("idpersonne")int idpersonne){
         return this.annonceService.getNombreAnnoncePersonne(idpersonne);
     }
-    
+
     @GetMapping("/statistique")
     public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
         return this.annonceService.getStatistiqueComission(annee);
     }
-    
-    // public List<Annonces> getAllAnnonces() {
-    //     return this.annoncesService.getListeAnnonceOrderByBouquet();
-    // }
 
-    // public List<Annonces> getAnnoncesByPersonneId(@RequestParam("idpersonne") int idpersonne) {
-    //     return this.annoncesService.getListeAnnoncePersonneId(idpersonne);
-    // }
-
-    // http://localhost:8080/api/annonces/update?etat=1&idannonce=1
-//     @PostMapping("/update")
-//     public ResponseEntity<String> updateAnnonce(@RequestParam int etat, @RequestParam int idannonce) {
-//         // Appel de votre service pour mettre à jour l'annonce
-//         try {
-//             this.annoncesService.UpdateEtat(etat, idannonce);
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//         return ResponseEntity.ok("Annonce mise à jour avec succès");
-//     }
+    @GetMapping("/listeannonce")
+    public List<Annonce> getAnnonceWithLastBouquet() throws Exception {
+        return this.annonceService.GetAnnonce();
+    }
 
 }

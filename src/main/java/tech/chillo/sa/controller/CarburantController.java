@@ -8,7 +8,6 @@ import tech.chillo.sa.entites.Carburant;
 import tech.chillo.sa.entites.Marque;
 import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.model.StatistiqueComission;
-import tech.chillo.sa.service.AnnonceService;
 import tech.chillo.sa.service.CarburantService;
 
 import java.util.List;

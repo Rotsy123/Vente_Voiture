@@ -14,18 +14,60 @@ import java.util.Optional;
 
 
 public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
-    @Query("SELECT v FROM Voiture v INNER JOIN Annonce a ON v.id = a.voiture.id join bouquet on bouquet.id = a.bouquet.id WHERE a.personne.id = :idpersonne order by bouquet.pourcentage_commission desc")
-    List<Voiture> findVoituresByPersonneId(@Param("idpersonne") int idpersonne);
+    @Query(nativeQuery = true,
+            value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation" +
+                    " FROM historique h\n" +
+                    " JOIN annonce a ON h.annonce = a.id\n" +
+                    " JOIN (\n" +
+                    "    SELECT annonce, MAX(datedebut) as max_datedebut\n" +
+                    "    FROM historique\n" +
+                    "    GROUP BY annonce\n" +
+                    ") h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut\n" +
+                    "Join personne on a.idpersonne = personne.id\n" +
+                    "join bouquet on bouquet.id = h.idbouquet;")
+    List<Object[]> findAllAnnoncesWithLatestBouquet();
 
-    //TOKONY MBOLA ALAINA MIARAKA @ STATUT ANY
-    @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id WHERE a.personne.id = :idpersonne order by bouquet.pourcentage_commission desc")
-    List<Annonce> findByPersonneId(@Param("idpersonne") int idpersonne);
+    @Query(nativeQuery = true,
+            value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation" +
+                    " FROM historique h\n" +
+                    " JOIN annonce a ON h.annonce = a.id\n" +
+                    " JOIN (\n" +
+                    "    SELECT annonce, MAX(datedebut) as max_datedebut\n" +
+                    "    FROM historique\n" +
+                    "    GROUP BY annonce\n" +
+                    ") h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut\n" +
+                    "Join personne on a.idpersonne = personne.id\n" +
+                    "join bouquet on bouquet.id = h.bouquet" +
+                    " WHERE a.idpersonne = :idpersonne " +
+                    " order by bouquet.pourcentage_commission desc;")
+    List<Object[]> findByPersonneId(@Param("idpersonne") int idpersonne);
 
-    @Query("SELECT a FROM Annonce a join bouquet on bouquet.id = a.bouquet.id where a.etat>=5 order by bouquet.pourcentage_commission desc")
-    List<Annonce> GetAllAnnonceOrderByBouquet();
+    @Query(nativeQuery = true,
+            value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation" +
+                    " FROM historique h\n" +
+                    " JOIN annonce a ON h.annonce = a.id\n" +
+                    " JOIN (\n" +
+                    "    SELECT annonce, MAX(datedebut) as max_datedebut\n" +
+                    "    FROM historique\n" +
+                    "    GROUP BY annonce\n" +
+                    ") h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut\n" +
+                    "Join personne on a.idpersonne = personne.id\n" +
+                    "join bouquet on bouquet.id = h.bouquet" +
+                    " order by bouquet.pourcentage_commission desc;")
+    List<Object[]> GetAllAnnonceOrderByBouquet();
 
-    @Query("SELECT a FROM Annonce a where a.datepublication = :datePublication and a.personne.id = :idpersonne")
-    Optional<Annonce> getAnnoncesByDatePublicationAndIdpersonne(@Param("datePublication") LocalDateTime datePublication,@Param("idpersonne") int idpersonne);
+    @Query(nativeQuery = true,
+            value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation \n"+
+                    " FROM historique \n" +
+                    " JOIN annonce a ON h.annonce = a.id \n"+
+                    " JOIN (\n" +
+                    " SELECT annonce, MAX(datedebut) as max_datedebut \n" +
+                    " FROM historique \n" +
+                    " GROUP BY annonce \n" +
+                    " ) h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut \n" +
+                    " Join personne on a.idpersonne = personne.id \n" +
+                    " join bouquet on bouquet.id = h.bouquet where a.datepublication = :datePublication and a.idpersonne = :idpersonne")
+    Optional<Object[]> getAnnoncesByDatePublicationAndIdpersonne(@Param("datePublication") LocalDateTime datePublication,@Param("idpersonne") int idpersonne);
 
     List<Annonce> findByEtat(int etat);
 
@@ -49,7 +91,14 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     int countByEtatAndPersonne(@Param("etat") int etat,@Param("idpersonne") int idpersonne);
 
     // List<Annonce> findByPersonneId(int personneId);
-    @Query("SELECT a.bouquet.pourcentage_commission * d.prix / 100 FROM Annonce a JOIN DetailsVoiture d ON a.voiture.id = d.voiture.id JOIN Bouquet b ON b.id = a.bouquet.id WHERE a.id = :idannonce")
+    @Query(nativeQuery = true,
+            value = "    SELECT\n" +
+            "    SUM(b.pourcentage_commission * EXTRACT(EPOCH FROM (h.datefin - h.datedebut)) / (60 * 60 * 24)) AS difference_in_days\n" +
+            "    FROM\n" +
+            "    historique h\n" +
+            "    JOIN\n" +
+            "    bouquet b ON h.bouquet = b.id\n" +
+            "    WHERE h.annonce = :idannonce")
     double prixCommission(@Param("idannonce") int idannonce);
 
     int countByPersonneId(int idpersonne);

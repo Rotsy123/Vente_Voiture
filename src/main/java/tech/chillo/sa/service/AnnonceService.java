@@ -1,6 +1,7 @@
 package tech.chillo.sa.service;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.chillo.sa.controller.AnnonceCreationRequest;
@@ -9,10 +10,13 @@ import tech.chillo.sa.repository.*;
 import tech.chillo.sa.model.StatistiqueComission;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
+
 
 
 @Service
@@ -23,23 +27,91 @@ public class AnnonceService {
     private MarqueRepository marqueRepository;
     private ModeleRepository modeleRepository;
     private PersonneRepository personneRepository;
+    private BouquetRepository bouquetRepository;
 
-    public AnnonceService(AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr,PersonneRepository personneRepository){
+    public AnnonceService(BouquetRepository bouquetRepository,AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr, PersonneRepository personneRepository){
         this.annoncerepository = annoncerepository;
         this.voitureRepository = vp;
         this.detailsVoitureRepository = dvp;
         this.marqueRepository = mr;
         this.modeleRepository = mdr;
         this.personneRepository = personneRepository;
+        this.bouquetRepository = bouquetRepository;
     }
-    public List<Voiture> GetByIdPersonne(int idpersonne){
-        return  this.annoncerepository.findVoituresByPersonneId(idpersonne);
+    public Bouquet getBouquetById(int id) {
+        Optional<Bouquet> optionalBouquet = bouquetRepository.findById(id);
+        return optionalBouquet.orElse(null);
+    }
+
+    public Voiture getVoitureById(int id) {
+        Optional<Voiture> optionalVoiture = voitureRepository.findById(id);
+        return optionalVoiture.orElse(null);
+    }
+    public Personne getPersonneById(int id) {
+        Optional<Personne> optionalPersonne = personneRepository.findById(id);
+        return optionalPersonne.orElse(null);
+    }
+//    public List<Annonce> GetByIdPersonne(int idpersonne){
+//        return  this.annoncerepository.findLatestDistinctByPersonneId(idpersonne);
+//    }
+
+    public List<Annonce> GetAnnonce(){
+        List<Annonce> annonces = new ArrayList<>();
+
+        List<Object[]> results = annoncerepository.findAllAnnoncesWithLatestBouquet();
+        for (Object[] result : results) {
+            Annonce annonce = new Annonce();
+            annonce.setId((int) result[0]);
+            annonce.setVoiture(this.getVoitureById((int) result[2]));
+            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setBouquet(this.getBouquetById((int) result[4]));
+            annonce.setDatepublication((Timestamp) result[3]);
+            annonce.setEtat((int) result[5]);
+            annonce.setDatevalidation((Timestamp ) result[6]);
+
+            annonces.add(annonce);
+        }
+
+        return annonces;
+
     }
     public List<Annonce> GetAllOfPersonne(int idpersonne){
-        return this.annoncerepository.findByPersonneId(idpersonne);
+        List<Annonce> annonces = new ArrayList<>();
+
+        List<Object[]> results = annoncerepository.findByPersonneId(idpersonne);
+        for (Object[] result : results) {
+            Annonce annonce = new Annonce();
+            annonce.setId((int) result[0]);
+            annonce.setVoiture(this.getVoitureById((int) result[2]));
+            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setBouquet(this.getBouquetById((int) result[4]));
+            annonce.setDatepublication((Timestamp) result[3]);
+            annonce.setEtat((int) result[5]);
+            annonce.setDatevalidation((Timestamp ) result[6]);
+
+            annonces.add(annonce);
+        }
+
+        return annonces;
     }
     public List<Annonce> GetAllOrderByBouquet(){
-        return this.annoncerepository.GetAllAnnonceOrderByBouquet();
+        List<Annonce> annonces = new ArrayList<>();
+
+        List<Object[]> results = annoncerepository.GetAllAnnonceOrderByBouquet();
+        for (Object[] result : results) {
+            Annonce annonce = new Annonce();
+            annonce.setId((int) result[0]);
+            annonce.setVoiture(this.getVoitureById((int) result[2]));
+            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setBouquet(this.getBouquetById((int) result[4]));
+            annonce.setDatepublication((Timestamp) result[3]);
+            annonce.setEtat((int) result[5]);
+            annonce.setDatevalidation((Timestamp ) result[6]);
+
+            annonces.add(annonce);
+        }
+
+        return annonces;
     }
 
     @Transactional
@@ -54,10 +126,10 @@ public class AnnonceService {
         detailsVoiture.setVoiture(voiture);
         this.detailsVoitureRepository.save(detailsVoiture);
         annonce.setVoiture(voiture);
-    
+
         annonce.setPersonne(request.getAnnonce().getPersonne());
         return this.annoncerepository.save(annonce);
-        
+
     }
 
     public List<Annonce> getAnnonceByEtat(int etat) {
@@ -69,7 +141,7 @@ public class AnnonceService {
         List<Annonce> annconces = this.annoncerepository.findByEtat(0);
         return annconces;
     }
-    
+
     public long getNombreAnnonceNonLue(int idpersonne) {
         return annoncerepository.countByEtatAndPersonneNotEqual(0, idpersonne);
     }
@@ -88,11 +160,11 @@ public class AnnonceService {
     public void Validation(int id){
         annoncerepository.Validation(id);
     }
-    
+
     public int getNombreAnnoncePersonne(int idpersonne) {
         return annoncerepository.countByPersonneId(idpersonne);
     }
-    
+
     public int getNombreAnnonceVenduPersonne(int idpersonne) {
         return annoncerepository.countByPersonneIdAndEtat(idpersonne,10);
     }

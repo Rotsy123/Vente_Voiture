@@ -1,7 +1,13 @@
 package tech.chillo.sa.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Annonce")
@@ -18,36 +24,60 @@ public class Annonce {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "idbouquet")
     private Bouquet bouquet;
-    private LocalDateTime datepublication;
-    private int etat = 0;
-    private LocalDateTime datevalidation = null;
+    private Timestamp  datepublication;
+    private int etat;
+    private Timestamp  datevalidation;
+    public Annonce(int id, Voiture voiture, Personne personne, Bouquet bouquet, Timestamp  datepublication, int etat, Timestamp  datevalidation) {
+        this.id = id;
+        this.voiture = voiture;
+        this.personne = personne;
+        this.bouquet = bouquet;
+        this.datepublication = datepublication;
+        this.etat = etat;
+        this.datevalidation = datevalidation;
+    }
+
+
+    public Timestamp  getDatevalidation() {
+        return datevalidation;
+    }
+
+    public void setDatevalidation(Timestamp  datevalidation) {
+        this.datevalidation = datevalidation;
+    }
 
     public Annonce(){}
-    public Annonce(int id, Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat, LocalDateTime datevalidation){
+    public Annonce(int id, Voiture voiture, Personne personne,Bouquet bouquet, Timestamp  datepublication, Timestamp  datevalidation){
         setId(id);
         setVoiture(voiture);
         setPersonne(personne);
         setBouquet(bouquet);
         setDateplublication(datepublication);
         setDatevalidation(datevalidation);
+
     }
-    public Annonce(Voiture voiture, Personne personne,Bouquet bouquet, LocalDateTime datepublication,int etat, LocalDateTime datevalidation){
+    public Annonce(Voiture voiture, Personne personne,Bouquet bouquet, Timestamp  datepublication,Timestamp  datevalidation){
         setVoiture(voiture);
         setPersonne(personne);
         setBouquet(bouquet);
         setDateplublication(datepublication);
-        setEtat(etat);
         setDatevalidation(datevalidation);
     }
 
-    public LocalDateTime getDatevalidation(){return datevalidation;}
-    public void setDatevalidation(LocalDateTime datevalidation){this.datevalidation = datevalidation;}
-    public LocalDateTime getDatepublication() {
+    public Timestamp  getDatepublication() {
         return datepublication;
     }
 
-    public void setDatepublication(LocalDateTime datepublication) {
+    public void setDatepublication(Timestamp  datepublication) {
         this.datepublication = datepublication;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
     public Bouquet getBouquet() {
@@ -80,19 +110,11 @@ public class Annonce {
 
     public void setPersonne(Personne idpersonne) {this.personne = idpersonne;}
 
-    public LocalDateTime getDateplublication() {
+    public Timestamp getDateplublication() {
         return datepublication;
     }
 
-    public void setDateplublication(LocalDateTime dateplublication) {
+    public void setDateplublication(Timestamp  dateplublication) {
         this.datepublication = dateplublication;
-    }
-
-    public int getEtat() {
-        return etat;
-    }
-
-    public void setEtat(int etat) {
-        this.etat = etat;
     }
 }
