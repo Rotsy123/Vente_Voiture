@@ -21,5 +21,6 @@ public class BouquetService {
     public Optional<Bouquet> findById(int id){
         return this.bouquetRepository.findById(id);
     }
+    public void Creer(Bouquet bouquet){this.bouquetRepository.save(bouquet);}
 
 }

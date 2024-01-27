@@ -8,10 +8,10 @@ import tech.chillo.sa.entites.Bouquet;
 import tech.chillo.sa.entites.DetailsVoiture;
 import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.model.StatistiqueComission;
-import tech.chillo.sa.entites.Annonces;
+import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.service.AnnonceService;
-import tech.chillo.sa.service.BouquetService;
-import tech.chillo.sa.service.AnnoncesService;
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin
 
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +21,18 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(path = "annonce")
 public class AnnonceController {
-    private AnnonceService bouquetService;
+    private AnnonceService annonceService;
     // private AnnoncesService annoncesService;
 
-    public AnnonceController(AnnonceService bouquetService) {
-        this.bouquetService = bouquetService;
+    public AnnonceController(AnnonceService annonceService) {
+        this.annonceService = annonceService;
         // this.annoncesService = annoncesService;
     }
 
 //     @ResponseStatus(value = HttpStatus.CREATED)
      @PostMapping()
      public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
-         Annonce annonceOptional = this.bouquetService.createsaveAnnonceWithDetails(request);
+         Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
          return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
      }
 
@@ -46,14 +46,14 @@ public class AnnonceController {
     //     return this.annoncesService.GetAllOfPersonne(idpersonne);
     // }
 
-    // @GetMapping(produces = APPLICATION_JSON_VALUE)
-    // public List<Annonce> getAll() {
-    //     return this.annoncesService.GetAllOrderByBouquet();
-    // }
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public List<Annonce> getAll() {
+        return this.annonceService.GetAllOrderByBouquet();
+    }
 
     @GetMapping("/etat")
     public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
-        return new ResponseEntity<>(this.bouquetService.getAnnonceByEtat(etat), HttpStatus.OK);
+        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
     }
 
 
@@ -68,29 +68,29 @@ public class AnnonceController {
 
     @GetMapping("/annoncenonlue")
     public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
-        return this.bouquetService.getAnnoncesByEtatAndPersonneNotEqual(idpersonne);
+        return this.annonceService.getAnnoncesByEtatAndPersonneNotEqual(idpersonne);
     }
 
     @GetMapping("/nombrenonlue")
     public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
-        return this.bouquetService.getNombreAnnonceNonLue(idpersonne);
+        return this.annonceService.getNombreAnnonceNonLue(idpersonne);
     }
 
     @PutMapping("/updateEtat")
     public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce, 
                                                 @RequestParam("nouvelEtat") int nouvelEtat) {
-        bouquetService.updateEtatAnnonce(idannonce, nouvelEtat);
+        annonceService.updateEtatAnnonce(idannonce, nouvelEtat);
         return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
     }
     
     @GetMapping("/nombreAnnoncePersonne")
     public long getNombreAnnoncePersonne(@RequestParam("idpersonne")int idpersonne){
-        return this.bouquetService.getNombreAnnoncePersonne(idpersonne);
+        return this.annonceService.getNombreAnnoncePersonne(idpersonne);
     }
     
     @GetMapping("/statistique")
     public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
-        return this.bouquetService.getStatistiqueComission(annee);
+        return this.annonceService.getStatistiqueComission(annee);
     }
     
     // public List<Annonces> getAllAnnonces() {
