@@ -72,8 +72,8 @@ public class AnnonceService {
         for (Object[] result : results) {
             Annonce annonce = new Annonce();
             annonce.setId((int) result[0]);
-            annonce.setVoiture(this.getVoitureById((int) result[2]));
-            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setVoiture(this.getVoitureById((int) result[1]));
+            annonce.setPersonne(this.getPersonneById((int) result[2]));
             annonce.setBouquet(this.getBouquetById((int) result[4]));
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
@@ -92,8 +92,8 @@ public class AnnonceService {
         for (Object[] result : results) {
             Annonce annonce = new Annonce();
             annonce.setId((int) result[0]);
-            annonce.setVoiture(this.getVoitureById((int) result[2]));
-            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setVoiture(this.getVoitureById((int) result[1]));
+            annonce.setPersonne(this.getPersonneById((int) result[2]));
             annonce.setBouquet(this.getBouquetById((int) result[4]));
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
@@ -111,8 +111,8 @@ public class AnnonceService {
         for (Object[] result : results) {
             Annonce annonce = new Annonce();
             annonce.setId((int) result[0]);
-            annonce.setVoiture(this.getVoitureById((int) result[2]));
-            annonce.setPersonne(this.getPersonneById((int) result[1]));
+            annonce.setVoiture(this.getVoitureById((int) result[1]));
+            annonce.setPersonne(this.getPersonneById((int) result[2]));
             annonce.setBouquet(this.getBouquetById((int) result[4]));
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);

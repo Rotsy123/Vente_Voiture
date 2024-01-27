@@ -48,12 +48,12 @@ public class PersonneService {
         StatistiqueUtilisateur statistiqueUtilisateur = new StatistiqueUtilisateur();
         Optional<Personne> personne = findById(idpersonne);
 
-//        if (personne.isPresent()) {
-//            Personne pers = personne.get();
-//            statistiqueUtilisateur.setPersonne(pers);
-//            statistiqueUtilisateur.setNombre_annonce(annonceService.getNombreAnnoncePersonne(idpersonne));
-//            statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(idpersonne));
-//        }
+       if (personne.isPresent()) {
+           Personne pers = personne.get();
+           statistiqueUtilisateur.setPersonne(pers);
+           statistiqueUtilisateur.setNombre_annonce(annonceService.getNombreAnnoncePersonne(idpersonne));
+           statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(idpersonne));
+       }
         return statistiqueUtilisateur;
     }
 
