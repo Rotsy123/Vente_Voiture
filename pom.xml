@@ -69,19 +69,20 @@
 			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-admin</artifactId>
-			<version>6.13.0</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.google.firebase</groupId>-->
+<!--			<artifactId>firebase-admin</artifactId>-->
+<!--			<version>6.13.0</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-		</dependency> -->
+		</dependency>
+
 	</dependencies>
 
 
