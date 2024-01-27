@@ -43,8 +43,12 @@ public class AnnonceController {
 
      @GetMapping(produces = APPLICATION_JSON_VALUE)
      public List<Annonce> getAll() {
-         return this.annonceService.GetAllOrderByBouquet();
+         return this.annonceService.GetAllNonValiderOrderByBouquet();
      }
+
+     @GetMapping(path = "/annoncevalidee", produces = APPLICATION_JSON_VALUE)
+     public List<Annonce> getAllValider ()
+     {return this.annonceService.GetAllValiderOrderByBouquet();}
 
 //    @GetMapping("/etat")
 //    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {

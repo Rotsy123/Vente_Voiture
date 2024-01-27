@@ -53,8 +53,24 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
                     ") h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut\n" +
                     "Join personne on a.idpersonne = personne.id\n" +
                     "join bouquet on bouquet.id = h.bouquet" +
+                    " where a.datevalidation is null "+
                     " order by bouquet.pourcentage_commission desc;")
-    List<Object[]> GetAllAnnonceOrderByBouquet();
+    List<Object[]> GetAllAnnonceNonValiderOrderByBouquet();
+
+    @Query(nativeQuery = true,
+            value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation" +
+                    " FROM historique h\n" +
+                    " JOIN annonce a ON h.annonce = a.id\n" +
+                    " JOIN (\n" +
+                    "    SELECT annonce, MAX(datedebut) as max_datedebut\n" +
+                    "    FROM historique\n" +
+                    "    GROUP BY annonce\n" +
+                    ") h_max ON h.annonce = h_max.annonce AND h.datedebut = h_max.max_datedebut\n" +
+                    "Join personne on a.idpersonne = personne.id\n" +
+                    "join bouquet on bouquet.id = h.bouquet" +
+                    " where a.datevalidation is not null "+
+                    " order by bouquet.pourcentage_commission desc;")
+    List<Object[]> GetAllAnnonceValiderOrderByBouquet();
 
     @Query(nativeQuery = true,
             value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation \n"+

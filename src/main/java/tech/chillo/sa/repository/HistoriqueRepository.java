@@ -11,4 +11,5 @@ import java.util.List;
 public interface HistoriqueRepository extends JpaRepository<Historique, Integer> {
     @Query("SELECT h FROM Historique h WHERE h.annonce.id = :idAnnonce")
     List<Historique> findByAnnonce(@Param("idAnnonce") int idAnnonce);
+
 }
