@@ -89,7 +89,7 @@ public class AnnonceController {
     }
 
     @GetMapping("/statistique")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
         System.out.println("Role de l'utilisateur: " + annee);
         // org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -3,6 +3,7 @@ package tech.chillo.sa.security.filter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -45,7 +47,21 @@ public class TokenFilter extends OncePerRequestFilter {
             Claims claims = jwt.resolveClaims(request);
             if (claims!=null && jwt.validateClaims(claims)) {
                 String id = claims.getIssuer();
-                Authentication auth = new UsernamePasswordAuthenticationToken(id, "", new ArrayList<>());
+    
+                // Extraire le rôle de l'utilisateur des revendications du token JWT
+                String role = (String) claims.get("role"); // Remplacez "role" par la clé de la revendication correspondant au rôle
+
+                // Créer une autorité à partir du rôle (sans ajouter manuellement le préfixe "ROLE_")
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
+
+                // Créer une liste d'autorités (rôles) pour l'utilisateur
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(authority);
+
+                // Créer l'objet Authentication avec l'identifiant et les autorités (rôles) de l'utilisateur
+                Authentication auth = new UsernamePasswordAuthenticationToken(id, "", authorities);
+                
+                // Définir l'objet Authentication dans le contexte de sécurité
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch(RuntimeException e){

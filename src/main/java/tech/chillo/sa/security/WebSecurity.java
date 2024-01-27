@@ -45,7 +45,8 @@ public class WebSecurity {
                         // AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/statistique")
                 )
                 .permitAll()
-                // .requestMatchers(HttpMethod.GET, "/annonce/statistique").hasRole("ADMIN")    
+                .requestMatchers("/.*") // Chemin dynamique pour tous les GET
+                    .access("@authService.checkRole(request)")    
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

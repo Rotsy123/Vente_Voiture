@@ -1,6 +1,8 @@
 package tech.chillo.sa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -67,16 +69,19 @@ public class LoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // TODO Auto-generated method stub
         Compte useroptional = compteRepository.findByPersonne_Mail(email);
-        // List<String> roles = new ArrayList<>();
-        // if (!useroptional.isPresent()) {
-        //     throw new UsernameNotFoundException("Check your mail");
-        // }
-        // roles.add("USER");
-        System.out.println("------------------------------------------------------------- "+useroptional.getPersonne().getRole());
+        if (useroptional == null) {
+            throw new UsernameNotFoundException("Utilisateur non trouvé avec l'adresse e-mail: " + email);
+        }
+    
+        // Construire la liste des rôles de l'utilisateur (sans ajouter manuellement le préfixe "ROLE_")
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(useroptional.getPersonne().getRole()));
+    
+        // Construire et retourner l'objet UserDetails
         return org.springframework.security.core.userdetails.User.builder()
                 .username(String.valueOf(useroptional.getPersonne().getId()))
                 .password(useroptional.getMotdepasse())
-                .roles(useroptional.getPersonne().getRole())
+                .authorities(authorities) // Utilisation de "authorities" au lieu de "roles"
                 .build();
     }
 }
