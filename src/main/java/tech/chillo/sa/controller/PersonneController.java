@@ -9,6 +9,7 @@ import tech.chillo.sa.model.StatistiqueUtilisateur;
 import tech.chillo.sa.service.PersonneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.slf4j.Logger;
@@ -37,12 +38,12 @@ public class PersonneController {
         }
     }
 
-    // @ResponseStatus(value = HttpStatus.CREATED)
-    // @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Object> createAccount(@RequestBody Personne personne,String motdepasse1,String motdepasse2) {
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> createAccount(@RequestBody Personne personne) throws Exception{
 
-    //     return new ResponseEntity<>(annoncesService.saveAnnonces(annonceOptional), HttpStatus.OK);
-    // }
+        return new ResponseEntity<>(personneService.savePersonne(personne), HttpStatus.OK);
+    }
 
     @GetMapping("/statistique")
     public StatistiqueUtilisateur getStatistiqueUtilisateur(@RequestParam("idpersonne")int idpersonne){

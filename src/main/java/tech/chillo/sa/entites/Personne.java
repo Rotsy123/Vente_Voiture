@@ -3,6 +3,8 @@ package tech.chillo.sa.entites;
 import jakarta.persistence.*;
 import java.util.Date;
 
+// import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "Personne")
 public class Personne {
@@ -92,8 +94,8 @@ public class Personne {
         this.motdepasse = motdepasse;
     }
 
-    public void setMotdepasse(String motdepasse1, String motdepasse2) throws Exception{
-        if(motdepasse1.equalsIgnoreCase(motdepasse2)) this.setMotdepasse(motdepasse1); 
-        else throw new Exception("Mot de passe invalide");
-    }
+    // public void setMotdepasse(String motdepasse1, String motdepasse2) throws Exception{
+    //     if(motdepasse1.equalsIgnoreCase(motdepasse2)) this.setMotdepasse(motdepasse1); 
+    //     else throw new Exception("Mot de passe invalide");
+    // }
 }
