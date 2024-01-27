@@ -39,22 +39,37 @@ public class WebSecurity {
                 .cors().and()
                 .authorizeRequests()
                 .requestMatchers(
-                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/login")
-                        // AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/etats"),
-                        // AntPathRequestMatcher.antMatcher(HttpMethod.PUT, "/annonce")
-                // ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/annonce")
-                // ,AntPathRequestMatcher.antMatcher("/brand")
-                // ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/category")
-                // ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/model")
-                // ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/message")
-                // ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/advancedReseach/search")
-                ).permitAll()
+                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte/sign"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/annonce/etat"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte")
+                        // AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/statistique")
+                )
+                .permitAll()
+                // .requestMatchers(HttpMethod.GET, "/annonce/statistique").hasRole("ADMIN")    
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+    // Exception {
+    // http.csrf().disable()
+    // .cors().and()
+    // .authorizeRequests()
+    // .requestMatchers(HttpMethod.POST, "/compte/sign").permitAll()
+    // .requestMatchers(HttpMethod.POST, "/compte").permitAll()
+    // .requestMatchers(HttpMethod.GET, "/statistique").hasRole("ADMIN") //
+    // Configuration pour l'accès avec le rôle ADMIN seulement
+    // .anyRequest().authenticated()
+    // .and()
+    // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    // .and()
+    // .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+    // return http.build();
+    // }
 
     @SuppressWarnings("deprecation")
     @Bean

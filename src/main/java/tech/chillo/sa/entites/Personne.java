@@ -18,6 +18,7 @@ public class Personne {
     private String mail;
     private String telephone;
     private String adresse;
+    private String role;
 
     public Personne() {
     }
@@ -77,6 +78,15 @@ public class Personne {
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 
 
 }

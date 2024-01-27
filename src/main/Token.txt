@@ -50,3 +50,16 @@ public class JWTGenerator {
     function removeToken() {
         localStorage.removeItem('authToken');
     }
+
+
+
+    {
+  "id": 1,
+  "nom": "Doe",
+  "prenoms": "John",
+  "datedenaissance": "1980-01-01",
+  "mail": "john.doe@example.com",
+  "telephone": "+123456789",
+  "adresse": "123 Main Street, City, Country",
+  "role": "ADMIN"
+}

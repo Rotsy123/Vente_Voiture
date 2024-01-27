@@ -13,7 +13,6 @@ import javax.naming.AuthenticationException;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import tech.chillo.sa.entites.Personne;
 
 @Component
 public class JwtUtils {
@@ -36,10 +35,13 @@ public class JwtUtils {
                 .setIssuer(String.valueOf(user.getUsername()))
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiryAt);
-
+    
+        // Ajouter le rôle de l'utilisateur aux claims
+        claims.put("role", user.getAuthorities().iterator().next().getAuthority());
+    
         // optional claims
-        // claims.put("email", user.getMail());
-        // claims.put("admin", user.isAdmin());
+        // claims.put("email", user.getUsername());
+        // claims.put("admin", user.g);
 
         // generate jwt using claims
         return Jwts.builder()

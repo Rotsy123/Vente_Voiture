@@ -15,5 +15,5 @@ public interface PersonneRepository extends JpaRepository<Personne, Integer> {
 
     Optional<Personne> findByMail(String mail);
 
-    Optional<Personne> findByMailAndMotdepasse(String mail, String motdepasse);
+    // Optional<Personne> findByMailAndMotdepasse(String mail, String motdepasse);
 }

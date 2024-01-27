@@ -1,14 +1,10 @@
 package tech.chillo.sa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tech.chillo.sa.entites.Personne;
 import tech.chillo.sa.repository.PersonneRepository;
 import tech.chillo.sa.model.StatistiqueUtilisateur;
-// import tech.chillo.sa.security.TokenUtil;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +32,11 @@ public class PersonneService {
         return this.personneRepository.findById(id);
     }
 
+    public Personne findByMail(String id) {
+        return this.personneRepository.findByMail(id)
+                .orElseThrow(() -> new NoSuchElementException("Personne introuvable"));
+    }
+
     public Personne save(Personne personne) {
 //        String mdp = this.passwordEncoder.encode(personne.getMotdepasse());
 //        System.out.println(mdp + "   ----------------------   " + personne.getMotdepasse());
@@ -43,18 +44,7 @@ public class PersonneService {
         return this.personneRepository.save(personne);
     }
 
-    public Personne connected(String mail, String motdepasse) throws Exception {
-        Optional<Personne> personne = personneRepository.findByMailAndMotdepasse(mail, motdepasse);
-
-        if (personne.isPresent()) {
-            Personne user = personne.get();
-//            String hashedPassword = passwordEncoder.encode(motdepasse);
-//            user.setMotdepasse(hashedPassword);
-            return user;
-        }
-
-        throw new Exception("Mot de passe incorrect");
-    }
+   
 
     // public Personne savePersonne(Personne personne, String motdepasse1, String
     // motdepasse2) throws Exception {

@@ -1,12 +1,16 @@
 package tech.chillo.sa.controller;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.model.StatistiqueComission;
 import tech.chillo.sa.service.AnnonceService;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -46,10 +50,10 @@ public class AnnonceController {
          return this.annonceService.GetAllOrderByBouquet();
      }
 
-//    @GetMapping("/etat")
-//    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
-//        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
-//    }
+   @GetMapping("/etat")
+   public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+       return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
+   }
 
 //    @GetMapping("/annoncenonlue")
 //    public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
@@ -77,7 +81,13 @@ public class AnnonceController {
     }
 
     @GetMapping("/statistique")
+    // @PreAuthorize("hasRole('ADMIN')")
     public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
+        System.out.println("Role de l'utilisateur: " + annee);
+        // org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // String role = authentication.getAuthorities().iterator().next().getAuthority();
+        // System.out.println("Role de l'utilisateur: " + role);
+        // System.out.println("Okkkkkkkkk");
         return this.annonceService.getStatistiqueComission(annee);
     }
 
