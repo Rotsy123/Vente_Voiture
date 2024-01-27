@@ -47,13 +47,21 @@ public class AnnonceController {
 
      @GetMapping(produces = APPLICATION_JSON_VALUE)
      public List<Annonce> getAll() {
-         return this.annonceService.GetAllOrderByBouquet();
+         return this.annonceService.GetAllNonValiderOrderByBouquet();
      }
 
    @GetMapping("/etat")
    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
    }
+     @GetMapping(path = "/annoncevalidee", produces = APPLICATION_JSON_VALUE)
+     public List<Annonce> getAllValider ()
+     {return this.annonceService.GetAllValiderOrderByBouquet();}
+
+//    @GetMapping("/etat")
+//    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+//        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
+//    }
 
 //    @GetMapping("/annoncenonlue")
 //    public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){

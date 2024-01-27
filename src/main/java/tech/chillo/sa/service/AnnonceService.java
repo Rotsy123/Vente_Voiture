@@ -104,10 +104,10 @@ public class AnnonceService {
 
         return annonces;
     }
-    public List<Annonce> GetAllOrderByBouquet(){
+    public List<Annonce> GetAllNonValiderOrderByBouquet(){
         List<Annonce> annonces = new ArrayList<>();
 
-        List<Object[]> results = annoncerepository.GetAllAnnonceOrderByBouquet();
+        List<Object[]> results = annoncerepository.GetAllAnnonceNonValiderOrderByBouquet();
         for (Object[] result : results) {
             Annonce annonce = new Annonce();
             annonce.setId((int) result[0]);
@@ -124,6 +124,25 @@ public class AnnonceService {
         return annonces;
     }
 
+    public List<Annonce> GetAllValiderOrderByBouquet(){
+        List<Annonce> annonces = new ArrayList<>();
+
+        List<Object[]> results = annoncerepository.GetAllAnnonceValiderOrderByBouquet();
+        for (Object[] result : results) {
+            Annonce annonce = new Annonce();
+            annonce.setId((int) result[0]);
+            annonce.setVoiture(this.getVoitureById((int) result[1]));
+            annonce.setPersonne(this.getPersonneById((int) result[2]));
+            annonce.setBouquet(this.getBouquetById((int) result[4]));
+            annonce.setDatepublication((Timestamp) result[3]);
+            annonce.setEtat((int) result[5]);
+            annonce.setDatevalidation((Timestamp ) result[6]);
+
+            annonces.add(annonce);
+        }
+
+        return annonces;
+    }
     @Transactional
     public Annonce createsaveAnnonceWithDetails(AnnonceCreationRequest request) {
         Voiture voiture = request.getVoiture();
