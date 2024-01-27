@@ -36,15 +36,15 @@
 }
 
 3-http://localhost:8083/api/messagerie?personne1=1&personne2=2 (discussion entre les deux personne)
+4- http://localhost:8080/api/annonce/update?etat=1&idannonce=3 manaon update etat ana annnonce	
+5- MAKA NY VOITURE ANA OLONA 1
+	http://localhost:8080/api/annonce/1
 
+6- MAKA NY ANNONCE ANA OLONA 1
+http://localhost:8080/api/annonce/lis/1
 
+7-LISTE ANA ANNONCE JIABIJIABY
+http://localhost:8080/api/annonce
 
-creation annonce
-liste annonce personne
-toute les annonces
-Update etat annonce
-Nouvelle annonce 
-notification -> nombre - update etat deja lue
-Nouveau message -> nombre - update etat deja lue
-discussion
-
+8-Nbre de message	
+	http://localhost:8080/api/messagerie/nombreMessage?idpersonne=1

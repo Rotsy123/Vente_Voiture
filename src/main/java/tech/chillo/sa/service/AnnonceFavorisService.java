@@ -26,7 +26,7 @@ public class AnnonceFavorisService {
         this.annonceFavorisRepository.save(anf);
 
     }
-    public List<AnnonceFavoris> GetFavorisByPersonne(int idpersonne){
-        return this.annonceFavorisRepository.findByPersonneId(idpersonne);
-    }
+//    public List<AnnonceFavoris> GetFavorisByPersonne(int idpersonne){
+//        return this.annonceFavorisRepository.findByPersonneId(idpersonne);
+//    }
 }

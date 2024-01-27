@@ -29,32 +29,32 @@ public class PersonneService {
         this.personneRepository.save(personne);
     }
 
-    public Personne connected(String mail, String motdepasse) throws Exception {
-        Optional<Personne> personne = personneRepository.findByMailAndMotdepasse(mail, motdepasse);
-    
-        if (personne.isPresent()) {
-            return personne.get();
-        }
-    
-        throw new Exception("Mot de passe incorrect");
-    }
+//    public Personne connected(String mail, String motdepasse) throws Exception {
+//        Optional<Personne> personne = personneRepository.findByMailAndMotdepasse(mail, motdepasse);
+//
+//        if (personne.isPresent()) {
+//            return personne.get();
+//        }
+//
+//        throw new Exception("Mot de passe incorrect");
+//    }
 
-    public Personne savePersonne(Personne personne, String motdepasse1, String motdepasse2) throws Exception {
-        personne.setMotdepasse(motdepasse1,motdepasse2);
+    public Personne savePersonne(Personne personne) throws Exception {
+//        personne.setMotdepasse(motdepasse1,motdepasse2);
         return personneRepository.save(personne);
-    } 
+    }
 
     public StatistiqueUtilisateur getStatistiqueUtilisateur (int idpersonne) {
         StatistiqueUtilisateur statistiqueUtilisateur = new StatistiqueUtilisateur();
         Optional<Personne> personne = findById(idpersonne);
-    
-        if (personne.isPresent()) {
-            Personne pers = personne.get();
-            statistiqueUtilisateur.setPersonne(pers);
-            statistiqueUtilisateur.setNombre_annonce(annonceService.getNombreAnnoncePersonne(idpersonne));
-            statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(idpersonne));
-        }
+
+//        if (personne.isPresent()) {
+//            Personne pers = personne.get();
+//            statistiqueUtilisateur.setPersonne(pers);
+//            statistiqueUtilisateur.setNombre_annonce(annonceService.getNombreAnnoncePersonne(idpersonne));
+//            statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(idpersonne));
+//        }
         return statistiqueUtilisateur;
     }
-    
+
 }

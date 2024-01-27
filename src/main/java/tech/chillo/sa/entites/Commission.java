@@ -8,23 +8,26 @@
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    int id;
-//    @OneToOne(fetch = FetchType.EAGER,mappedBy = "commission", cascade = CascadeType.MERGE)
+//    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "commission", cascade = CascadeType.MERGE)
 //    Annonce annonce;
-//    Date date;
+//    Date datedebut;
+//    Date datefin;
 //    double prix;
 //
 //
 //    public Commission(){}
-//    public Commission(Annonce annonce, Date date, double prix)throws Exception{
+//    public Commission(Annonce annonce, Date date, Date datefin,double prix)throws Exception{
 //        this.annonce = annonce;
-//        this.date = date;
+//        this.datedebut = date;
+//        this.datefin = datefin;
 //        this.setPrix(prix);
 //    }
 //
-//    public Commission(int id, Annonce annonce, Date date, double prix)throws Exception{
+//    public Commission(int id, Annonce annonce, Date date,Date datefin, double prix)throws Exception{
 //        this.id = id;
 //        this.annonce = annonce;
-//        this.date = date;
+//        this.datedebut = date;
+//        this.datedebut = date;
 //        this.setPrix(prix);
 //    }
 //
@@ -44,12 +47,20 @@
 //        this.annonce = annonce;
 //    }
 //
-//    public Date getDate() {
-//        return date;
+//    public Date getDatedebut() {
+//        return datedebut;
 //    }
 //
-//    public void setDate(Date date) {
-//        this.date = date;
+//    public void setDatedebut(Date datedebut) {
+//        this.datedebut = datedebut;
+//    }
+//
+//    public Date getDatefin() {
+//        return datefin;
+//    }
+//
+//    public void setDatefin(Date datefin) {
+//        this.datefin = datefin;
 //    }
 //
 //    public double getPrix() {
