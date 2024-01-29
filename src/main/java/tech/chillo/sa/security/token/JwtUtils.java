@@ -50,8 +50,15 @@ public class JwtUtils {
                 .compact();
     }
 
+    public int getId(String token) throws Exception {
+        Claims claims = verify(token);
+        String id = claims.getIssuer();
+        return Integer.valueOf(id);
+    }
+
     public Claims verify(String token) throws Exception {
         try {
+            System.out.println("Token"+ token);
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         } catch (Exception e) {
             throw new AccessDeniedException("Access denied");// TODO: handle exception

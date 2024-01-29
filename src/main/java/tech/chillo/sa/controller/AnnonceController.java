@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
+import tech.chillo.sa.entites.Personne;
 import tech.chillo.sa.model.StatistiqueComission;
 import tech.chillo.sa.security.token.JwtUtils;
 import tech.chillo.sa.service.AnnonceService;
+import tech.chillo.sa.service.PersonneService;
 
 import java.util.List;
 
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RequestMapping(path = "annonce")
 public class AnnonceController {
     private AnnonceService annonceService;
-    public AnnonceController(AnnonceService bouquetService) {
+    private PersonneService personne;
+    public AnnonceController(AnnonceService bouquetService,PersonneService personne) {
         this.annonceService = bouquetService;
+        this.personne = personne;
     }
 
     @GetMapping(path = "validation/{idannonce}", produces = APPLICATION_JSON_VALUE)
@@ -31,9 +35,21 @@ public class AnnonceController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
-        Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
-        return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
+    public ResponseEntity<Object> createAnnonceWithDetails(@RequestHeader(name="Authorization") String authorizationHeader,@RequestBody AnnonceCreationRequest request) {
+        JwtUtils jwt = new JwtUtils();
+        String token = authorizationHeader.substring(7);
+        System.out.println("Token "+ token);
+        try {
+            int id = jwt.getId(token);
+            System.out.println("ID "+ id);
+
+            request.getAnnonce().setPersonne(personne.findById(id).orElseThrow());
+            Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
+            return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
 //     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
@@ -46,12 +62,21 @@ public class AnnonceController {
          return this.annonceService.GetAllOfPersonne(idpersonne);
      }
 
-    //  @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
-    //  public List<Annonce> findByIdPersonne(@RequestHeader(name="Authorization") String authorizationHeader) {
-    //     JwtUtils jwt = new JwtUtils();
-    //     String token = authorizationHeader.substring(7);
-    //     //  return this.annonceService.GetAllOfPersonne(idpersonne);
-    //  }
+     @GetMapping(path = "list", produces = APPLICATION_JSON_VALUE)
+     public ResponseEntity<Object> findByIdPersonne1(@RequestHeader(name="Authorization") String authorizationHeader) {
+        JwtUtils jwt = new JwtUtils();
+        String token = authorizationHeader.substring(7);
+        try {
+            int id = jwt.getId(token);
+            return new ResponseEntity<>(this.annonceService.GetAllOfPersonne(id), HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+        
+
+        //  return this.annonceService.GetAllOfPersonne(idpersonne);
+     }
      
      @GetMapping(produces = APPLICATION_JSON_VALUE)
      @PreAuthorize("hasRole('ADMIN')")
@@ -78,18 +103,21 @@ public class AnnonceController {
 //    public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
 //        return this.annonceService.getAnnoncesByEtatAndPersonneNotEqual(idpersonne);
 //    }
-
+//
+//    @GetMapping("/nombrenonlue")
+//    public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
+//        return this.annonceService.getNombreAnnonceNonLue(idpersonne);
+//    }
 
     @DeleteMapping("/deleteannonce")
     public void DeleteAnnonce(@RequestParam("idannonce") int idannonce){ //idpersonne
         this.annonceService.DeleteAnnonce(idannonce);
     }
 
-    @PutMapping("/updateEtat")
+    @PutMapping("/updateEtatVendu")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce,
-                                                @RequestParam("nouvelEtat") int nouvelEtat) {
-        this.annonceService.updateEtatAnnonce(idannonce, nouvelEtat);
+    public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce) {
+        this.annonceService.updateEtatAnnonce(idannonce);
         return new ResponseEntity<>("État mis à jour avec succès.", HttpStatus.OK);
     }
 

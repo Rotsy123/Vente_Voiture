@@ -181,8 +181,8 @@ public class AnnonceService {
     }
 
     @Transactional
-    public void updateEtatAnnonce(int id, int nouvelEtat) {
-        annoncerepository.updateEtat(id, nouvelEtat);
+    public void updateEtatAnnonce(int id) {
+        annoncerepository.updateEtat(id, 10);
     }
 
     @Transactional
