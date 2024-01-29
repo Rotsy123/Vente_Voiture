@@ -48,3 +48,37 @@ http://localhost:8080/api/annonce
 
 8-Nbre de message	
 	http://localhost:8080/api/messagerie/nombreMessage?idpersonne=1
+9-VALIDATION D'ANNONCE
+hhtp://localhost:8083/api/annonce/validation/{idannonce}
+10-TOUTES LES ANNONCES VALIDEES
+http://localhost:8083/api/annonce/annoncevalidee
+11- SUPPRIMER UNE ANNONCE
+http://localhost:8083/api/annonce/deleteannonce?idannonce=X
+
+12-CREER BOUQUET/COMMISSION
+http://localhost:8083/api/bouquet
+{
+	"nom":"VIP",
+	"pourcentage_commission":"10000"
+}
+
+13-LISTE DE TOUS LES BOUQUETS
+http://localhost:8083/api/bouquet
+
+14-RECHERCHER BOUQUETS PAR ID
+http://localhost:8083/api/bouquet/idbouquet
+
+
+
+15-CREER CARBURANT
+http://localhost:8083/api/carburant
+{
+	"nom":"VIP",
+	"pourcentage_commission":"10000"
+}
+
+13-LISTE DE TOUS LES BOUQUETS
+http://localhost:8083/api/bouquet
+
+14-RECHERCHER BOUQUETS PAR ID
+http://localhost:8083/api/bouquet/idbouquet
