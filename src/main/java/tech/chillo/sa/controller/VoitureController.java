@@ -13,10 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "voiture")
 public class VoitureController {
     private VoitureService voitureService;

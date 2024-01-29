@@ -1,6 +1,7 @@
 package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Transmission;
 import tech.chillo.sa.service.TransmissionService;
@@ -8,8 +9,9 @@ import tech.chillo.sa.service.TransmissionService;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
+@CrossOrigin
 @RequestMapping(path = "transmission")
 public class TransmissionController {
     private TransmissionService transmissionservice;
@@ -19,6 +21,7 @@ public class TransmissionController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void create(@RequestBody Transmission transmission) {
         transmissionservice.Creer(transmission);
     }

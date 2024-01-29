@@ -2,6 +2,7 @@ package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Carburant;
@@ -13,8 +14,9 @@ import tech.chillo.sa.service.CarburantService;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
+@CrossOrigin
 @RequestMapping(path = "carburant")
 public class CarburantController {
     private CarburantService carburantservice;
@@ -24,6 +26,7 @@ public class CarburantController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void create(@RequestBody Carburant carburant) {
         carburantservice.create(carburant);
     }
