@@ -13,6 +13,7 @@ import io.jsonwebtoken.JwtBuilder;
 import org.springframework.web.bind.annotation.RequestParam;
 import tech.chillo.sa.dto.AuthentificationDTO;
 import tech.chillo.sa.entites.Personne;
+// import tech.chillo.sa.model.List;
 import tech.chillo.sa.model.StatistiqueUtilisateur;
 import tech.chillo.sa.repository.CompteRepository;
 import tech.chillo.sa.security.token.JwtUtils;
@@ -24,8 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Map;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
@@ -76,9 +75,8 @@ public class PersonneController {
 
     // @GetMapping("/nombreAnnoncePersonne")
 
-    // @GetMapping("/statistique")
-    // public StatistiqueUtilisateur
-    // getStatistiqueUtilisateur(@RequestParam("idpersonne")int idpersonne){
-    // return this.personneService.getStatistiqueUtilisateur(idpersonne);
-    // }
+    @GetMapping("/statistique")
+    public List<StatistiqueUtilisateur> getStatistiqueUtilisateur(){
+        return this.personneservice.getStatistiqueUtilisateurs();
+    }
 }
