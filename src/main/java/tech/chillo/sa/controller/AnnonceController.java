@@ -11,8 +11,9 @@ import tech.chillo.sa.service.AnnonceService;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
+@CrossOrigin
 @RequestMapping(path = "annonce")
 public class AnnonceController {
     private AnnonceService annonceService;

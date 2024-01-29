@@ -12,9 +12,10 @@ import tech.chillo.sa.service.MarqueService;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "marque")
 public class MarqueController {
     private MarqueService marqueService;
