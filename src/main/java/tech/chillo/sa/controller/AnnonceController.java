@@ -78,11 +78,7 @@ public class AnnonceController {
 //    public List<Annonce> getAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
 //        return this.annonceService.getAnnoncesByEtatAndPersonneNotEqual(idpersonne);
 //    }
-//
-//    @GetMapping("/nombrenonlue")
-//    public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
-//        return this.annonceService.getNombreAnnonceNonLue(idpersonne);
-//    }
+
 
     @DeleteMapping("/deleteannonce")
     public void DeleteAnnonce(@RequestParam("idannonce") int idannonce){ //idpersonne
