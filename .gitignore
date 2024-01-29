@@ -34,3 +34,5 @@ build/
 pom.xml
 postma.txt
 pom.xml
+*.properties
+src/main/resources/application.properties
