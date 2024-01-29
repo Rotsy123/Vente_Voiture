@@ -1,6 +1,7 @@
 package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Bouquet;
 import tech.chillo.sa.entites.Marque;
@@ -27,6 +28,7 @@ public class BouquetController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void create(@RequestBody Bouquet bouquet) {
         bouquetService.Creer(bouquet);
     }

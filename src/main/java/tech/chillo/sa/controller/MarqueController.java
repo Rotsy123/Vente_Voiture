@@ -2,6 +2,7 @@ package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Marque;
@@ -24,6 +25,7 @@ public class MarqueController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void create(@RequestBody Marque marque) {
         marqueService.Creer(marque);
     }

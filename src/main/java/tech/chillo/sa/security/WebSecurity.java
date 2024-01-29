@@ -40,9 +40,10 @@ public class WebSecurity {
                 .authorizeRequests()
                 .requestMatchers(
                         AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte/sign"),
-                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/annonce/etat"),
-                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte")
-                        // AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/statistique")
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/listeannonce"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/annoncevalidee"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/voiture")
                 )
                 .permitAll()
                 .requestMatchers("/.*") // Chemin dynamique pour tous les GET

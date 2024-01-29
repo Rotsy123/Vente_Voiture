@@ -45,26 +45,29 @@ public class TokenFilter extends OncePerRequestFilter {
             }
 
             Claims claims = jwt.resolveClaims(request);
-            if (claims!=null && jwt.validateClaims(claims)) {
+            if (claims != null && jwt.validateClaims(claims)) {
                 String id = claims.getIssuer();
-    
-                // Extraire le rôle de l'utilisateur des revendications du token JWT
-                String role = (String) claims.get("role"); // Remplacez "role" par la clé de la revendication correspondant au rôle
 
-                // Créer une autorité à partir du rôle (sans ajouter manuellement le préfixe "ROLE_")
+                // Extraire le rôle de l'utilisateur des revendications du token JWT
+                String role = (String) claims.get("role"); // Remplacez "role" par la clé de la revendication
+                                                           // correspondant au rôle
+                System.out.println(role + " ----------------------------");
+                // Créer une autorité à partir du rôle (sans ajouter manuellement le préfixe
+                // "ROLE_")
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
 
                 // Créer une liste d'autorités (rôles) pour l'utilisateur
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(authority);
 
-                // Créer l'objet Authentication avec l'identifiant et les autorités (rôles) de l'utilisateur
+                // Créer l'objet Authentication avec l'identifiant et les autorités (rôles) de
+                // l'utilisateur
                 Authentication auth = new UsernamePasswordAuthenticationToken(id, "", authorities);
-                
+
                 // Définir l'objet Authentication dans le contexte de sécurité
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        } catch(RuntimeException e){
+        } catch (RuntimeException e) {
             errors.put("message", "Authentication Error");
             errors.put("details", e.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());

@@ -1,16 +1,12 @@
 package tech.chillo.sa.controller;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
-import tech.chillo.sa.entites.Voiture;
 import tech.chillo.sa.model.StatistiqueComission;
 import tech.chillo.sa.service.AnnonceService;
-
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -25,15 +21,18 @@ public class AnnonceController {
     }
 
     @GetMapping(path = "validation/{idannonce}", produces = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void ValiderAnnonce(@PathVariable int idannonce){
         this.annonceService.Validation(idannonce);
     }
-     @ResponseStatus(value = HttpStatus.CREATED)
-     @PostMapping
-     public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
-         Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
-         return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
-     }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> createAnnonceWithDetails(@RequestBody AnnonceCreationRequest request) {
+        Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
+        return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
+    }
 
 //     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
 //     public List<Annonce> findById(@PathVariable int id) {
@@ -46,17 +45,20 @@ public class AnnonceController {
      }
 
      @GetMapping(produces = APPLICATION_JSON_VALUE)
+     @PreAuthorize("hasRole('ADMIN')")
      public List<Annonce> getAll() {
          return this.annonceService.GetAllNonValiderOrderByBouquet();
      }
 
-   @GetMapping("/etat")
-   public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
-       return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
-   }
-     @GetMapping(path = "/annoncevalidee", produces = APPLICATION_JSON_VALUE)
-     public List<Annonce> getAllValider ()
-     {return this.annonceService.GetAllValiderOrderByBouquet();}
+    @GetMapping("/etat")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/annoncevalidee", produces = APPLICATION_JSON_VALUE)
+    public List<Annonce> getAllValider ()
+    {return this.annonceService.GetAllValiderOrderByBouquet();}
 
 //    @GetMapping("/etat")
 //    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
@@ -72,11 +74,14 @@ public class AnnonceController {
 //    public long getNombreAnnonceNonLue(@RequestParam("idpersonne")int idpersonne){
 //        return this.annonceService.getNombreAnnonceNonLue(idpersonne);
 //    }
+
     @DeleteMapping("/deleteannonce")
-    public void DeleteAnnonce(@RequestParam("idannonce") int idannonce){
+    public void DeleteAnnonce(@RequestParam("idannonce") int idannonce){ //idpersonne
         this.annonceService.DeleteAnnonce(idannonce);
     }
+
     @PutMapping("/updateEtat")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> updateEtat(@RequestParam("idannonce") int idannonce,
                                                 @RequestParam("nouvelEtat") int nouvelEtat) {
         this.annonceService.updateEtatAnnonce(idannonce, nouvelEtat);
@@ -92,10 +97,6 @@ public class AnnonceController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
         System.out.println("Role de l'utilisateur: " + annee);
-        // org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // String role = authentication.getAuthorities().iterator().next().getAuthority();
-        // System.out.println("Role de l'utilisateur: " + role);
-        // System.out.println("Okkkkkkkkk");
         return this.annonceService.getStatistiqueComission(annee);
     }
 

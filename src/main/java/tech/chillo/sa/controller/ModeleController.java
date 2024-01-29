@@ -1,6 +1,7 @@
 package tech.chillo.sa.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Marque;
 import tech.chillo.sa.entites.Modele;
@@ -24,6 +25,7 @@ public class ModeleController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void Creer(@RequestBody Modele modele) {
         this.modeleservice.Creer(modele);
     }

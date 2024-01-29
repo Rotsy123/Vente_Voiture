@@ -47,12 +47,8 @@ public class PersonneController {
 
     @PostMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> checkPersonne(@RequestBody AuthentificationDTO authentificationDTO) {
-        System.out.println(
-        "ETTTTTTTTTTTTTTTTTTOOOOOOOO" +
-        personneService.loadUserByUsername(authentificationDTO.mail()));
         final UserDetails user = personneService.loadUserByUsername(authentificationDTO.mail());
         String token = jwt.generateJwt(user);
-        System.out.println("ETTTTTTTTTTTTTTTTTTOOOOOOOO" + token);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
