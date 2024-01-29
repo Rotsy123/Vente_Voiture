@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.model.StatistiqueComission;
+import tech.chillo.sa.security.token.JwtUtils;
 import tech.chillo.sa.service.AnnonceService;
 
 import java.util.List;
@@ -45,6 +46,13 @@ public class AnnonceController {
          return this.annonceService.GetAllOfPersonne(idpersonne);
      }
 
+    //  @GetMapping(path = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
+    //  public List<Annonce> findByIdPersonne(@RequestHeader(name="Authorization") String authorizationHeader) {
+    //     JwtUtils jwt = new JwtUtils();
+    //     String token = authorizationHeader.substring(7);
+    //     //  return this.annonceService.GetAllOfPersonne(idpersonne);
+    //  }
+     
      @GetMapping(produces = APPLICATION_JSON_VALUE)
      @PreAuthorize("hasRole('ADMIN')")
      public List<Annonce> getAll() {

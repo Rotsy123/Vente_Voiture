@@ -6,6 +6,8 @@ import tech.chillo.sa.repository.PersonneRepository;
 import tech.chillo.sa.model.StatistiqueUtilisateur;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +69,21 @@ public class PersonneService {
             statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(idpersonne));
         }
         return statistiqueUtilisateur;
+    }
+
+    public List<StatistiqueUtilisateur> getStatistiqueUtilisateurs() {
+        List<StatistiqueUtilisateur> statistiqueUtilisateurs = new ArrayList<StatistiqueUtilisateur>();
+        List<Personne> personne = findAll();
+
+        for (Personne pers : personne) {
+            StatistiqueUtilisateur statistiqueUtilisateur = new StatistiqueUtilisateur();
+
+            statistiqueUtilisateur.setPersonne(pers);
+            statistiqueUtilisateur.setNombre_annonce(annonceService.getNombreAnnoncePersonne(pers.getId()));
+            statistiqueUtilisateur.setNombre_annonce_vendu(annonceService.getNombreAnnonceVenduPersonne(pers.getId()));
+            statistiqueUtilisateurs.add(statistiqueUtilisateur);
+        }
+        return statistiqueUtilisateurs;
     }
 
 
