@@ -4,7 +4,7 @@ package tech.chillo.sa.entites;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "favoris")
+@Table(name = "annoncefavoris")
 public class AnnonceFavoris {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

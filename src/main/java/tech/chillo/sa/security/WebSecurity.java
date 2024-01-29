@@ -43,7 +43,10 @@ public class WebSecurity {
                         AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/listeannonce"),
                         AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/compte"),
                         AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annonce/annoncevalidee"),
-                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/voiture")
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/voiture"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/marque"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/modele"),
+                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/annoncefavoris")
                 )
                 .permitAll()
                 .requestMatchers("/.*") // Chemin dynamique pour tous les GET
