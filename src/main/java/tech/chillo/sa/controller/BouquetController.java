@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.http.HttpStatus;
-
 @RestController
 @CrossOrigin
 @RequestMapping(path = "bouquet")

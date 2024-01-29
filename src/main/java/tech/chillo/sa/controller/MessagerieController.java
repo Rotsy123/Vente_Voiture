@@ -4,16 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Messagerie;
-import tech.chillo.sa.entites.Personne;
 import tech.chillo.sa.service.MessagerieService;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
+@CrossOrigin
 @RequestMapping(path = "messagerie")
 public class MessagerieController {
     private MessagerieService messagerieService;

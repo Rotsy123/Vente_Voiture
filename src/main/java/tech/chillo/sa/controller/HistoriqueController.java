@@ -10,9 +10,10 @@ import tech.chillo.sa.service.HistoriqueService;
 import java.time.LocalDateTime;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "historique")
 public class HistoriqueController {
     private HistoriqueService historiqueService;

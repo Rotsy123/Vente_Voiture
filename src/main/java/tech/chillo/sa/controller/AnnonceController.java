@@ -1,7 +1,9 @@
 package tech.chillo.sa.controller;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
 import tech.chillo.sa.entites.Voiture;
@@ -11,10 +13,12 @@ import tech.chillo.sa.service.AnnonceService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 @CrossOrigin
 @RequestMapping(path = "annonce")
@@ -52,6 +56,23 @@ public class AnnonceController {
     public List<Annonce> getAll() {
         return this.annonceService.GetAllOrderByBouquet();
     }
+     @GetMapping(produces = APPLICATION_JSON_VALUE)
+     public List<Annonce> getAll() {
+         return this.annonceService.GetAllNonValiderOrderByBouquet();
+     }
+
+   @GetMapping("/etat")
+   public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+       return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
+   }
+     @GetMapping(path = "/annoncevalidee", produces = APPLICATION_JSON_VALUE)
+     public List<Annonce> getAllValider ()
+     {return this.annonceService.GetAllValiderOrderByBouquet();}
+
+//    @GetMapping("/etat")
+//    public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int etat) {
+//        return new ResponseEntity<>(this.annonceService.getAnnonceByEtat(etat), HttpStatus.OK);
+//    }
 
     // @GetMapping("/etat")
     // public ResponseEntity<Object> getAllAnnonceNonlue(@RequestParam("etat") int
@@ -89,7 +110,13 @@ public class AnnonceController {
     }
 
     @GetMapping("/statistique")
-    public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee") int annee) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<StatistiqueComission> getStatistiqueComission(@RequestParam("annee")int annee){
+        System.out.println("Role de l'utilisateur: " + annee);
+        // org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // String role = authentication.getAuthorities().iterator().next().getAuthority();
+        // System.out.println("Role de l'utilisateur: " + role);
+        // System.out.println("Okkkkkkkkk");
         return this.annonceService.getStatistiqueComission(annee);
     }
 
