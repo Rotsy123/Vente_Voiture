@@ -41,7 +41,7 @@ public class AnnonceFavorisController {
         }
     }
 
-    @GetMapping(value = "list/{idpersonne}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "list", produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> favorisListe(
             @RequestHeader(name = "Authorization") String authorizationHeader) {
