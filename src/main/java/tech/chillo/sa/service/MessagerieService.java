@@ -18,15 +18,15 @@ public class MessagerieService {
     private final PersonneRepository personneRepository;
 
     @Autowired
-    public MessagerieService(MessagerieRepository messagerieRepository,PersonneRepository personneRepository) {
+    public MessagerieService(MessagerieRepository messagerieRepository, PersonneRepository personneRepository) {
         this.messagerieRepository = messagerieRepository;
         this.personneRepository = personneRepository;
     }
 
-    public Messagerie saveMessagerie (Messagerie messagerie) {
+    public Messagerie saveMessagerie(Messagerie messagerie) {
         Optional<Personne> expediteur = personneRepository.findById(messagerie.getExpediteur().getId());
         Optional<Personne> destinataire = personneRepository.findById(messagerie.getDestinataire().getId());
-        if (expediteur.isPresent() && destinataire.isPresent()){
+        if (expediteur.isPresent() && destinataire.isPresent()) {
             messagerie.setExpediteur(expediteur.get());
             messagerie.setDestinataire(destinataire.get());
             return messagerieRepository.save(messagerie);
@@ -34,26 +34,36 @@ public class MessagerieService {
         return null;
     }
 
-    public List<Messagerie> listMessages (int exp,int dest) {
-        List<Messagerie> messages = messagerieRepository.findByExpediteur_IdAndDestinataire_IdOrExpediteur_IdAndDestinataire_IdOrderByDateenvoieDesc(exp,dest,dest,exp);
+    public List<Messagerie> listMessages(int exp, int dest) {
+        List<Messagerie> messages = messagerieRepository
+                .findByExpediteur_IdAndDestinataire_IdOrExpediteur_IdAndDestinataire_IdOrderByDateenvoieDesc(exp, dest,
+                        dest, exp);
         return messages;
     }
-    
-    public Messagerie getLastMessage(int exp,int dest){
-        List<Messagerie> messages = listMessages(exp,dest);
+
+    public Messagerie getLastMessage(int exp, int dest) {
+        List<Messagerie> messages = listMessages(exp, dest);
         Messagerie dernierMessage = messages.isEmpty() ? null : messages.get(0);
         return dernierMessage;
     }
 
     public long countMessageNonlue(int idpersonne) {
-        return messagerieRepository.countByEtatAndDestinataire_Id(0,idpersonne);
+        return messagerieRepository.countByEtatAndDestinataire_Id(0, idpersonne);
     }
 
     @Transactional
     public void updateEtatMessage(int id, int nouvelEtat) {
         // Optional<Messagerie> message = messagerieRepository.findById(id);
-        // if(message.isPresent()) 
+        // if(message.isPresent())
         messagerieRepository.updateEtat(id, nouvelEtat);
+    }
+
+    public Personne getPersonne(int idpersonne) {
+        Optional<Personne> personne = personneRepository.findById(idpersonne);
+        if (personne.isPresent()) {
+            return personne.get();
+        }
+        return null;
     }
 
 }
