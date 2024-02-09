@@ -1,6 +1,7 @@
 package tech.chillo.sa.service;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,10 @@ public class AnnonceService {
     private PersonneRepository personneRepository;
     private BouquetRepository bouquetRepository;
     private HistoriqueRepository historiqueRepository;
-    public AnnonceService(HistoriqueRepository historiqueRepository, BouquetRepository bouquetRepository,AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr, PersonneRepository personneRepository){
+    @Autowired
+    private PhotosRepository photosRepository;
+
+    public AnnonceService(HistoriqueRepository historiqueRepository, BouquetRepository bouquetRepository,AnnonceRepository annoncerepository, VoitureRepository vp, DetailsVoitureRepository dvp, MarqueRepository mr, ModeleRepository mdr, PersonneRepository personneRepository, PhotosRepository psr){
         this.annoncerepository = annoncerepository;
         this.voitureRepository = vp;
         this.detailsVoitureRepository = dvp;
@@ -38,6 +42,7 @@ public class AnnonceService {
         this.personneRepository = personneRepository;
         this.bouquetRepository = bouquetRepository;
         this.historiqueRepository = historiqueRepository;
+        this.photosRepository = psr;
     }
     public void DeleteAnnonce(int id){
         List<Historique> historiques = this.historiqueRepository.findByAnnonce(id);
@@ -78,7 +83,8 @@ public class AnnonceService {
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
             annonce.setDatevalidation((Timestamp ) result[6]);
-
+            Photos photos = this.photosRepository.getByIdvoiture(annonce.getVoiture().getId()+"");
+            annonce.getVoiture().setPhotos(photos.getPhotos());
             annonces.add(annonce);
         }
 
@@ -98,7 +104,8 @@ public class AnnonceService {
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
             annonce.setDatevalidation((Timestamp ) result[6]);
-
+            Photos photos = this.photosRepository.getByIdvoiture(annonce.getVoiture().getId()+"");
+            annonce.getVoiture().setPhotos(photos.getPhotos());
             annonces.add(annonce);
         }
 
@@ -117,13 +124,13 @@ public class AnnonceService {
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
             annonce.setDatevalidation((Timestamp ) result[6]);
-
+            Photos photos = this.photosRepository.getByIdvoiture(annonce.getVoiture().getId()+"");
+            annonce.getVoiture().setPhotos(photos.getPhotos());
             annonces.add(annonce);
         }
 
         return annonces;
     }
-
     public List<Annonce> GetAllValiderOrderByBouquet(){
         List<Annonce> annonces = new ArrayList<>();
 
@@ -137,7 +144,10 @@ public class AnnonceService {
             annonce.setDatepublication((Timestamp) result[3]);
             annonce.setEtat((int) result[5]);
             annonce.setDatevalidation((Timestamp ) result[6]);
-
+            System.out.println(annonce.getVoiture().getId()+" io mintsy");
+            Photos photos = this.photosRepository.getByIdvoiture(annonce.getVoiture().getId()+"");
+            System.out.println(photos.getPhotos().length+" io le photos jiaby");
+            annonce.getVoiture().setPhotos(photos.getPhotos());
             annonces.add(annonce);
         }
 
@@ -148,10 +158,16 @@ public class AnnonceService {
         Voiture voiture = request.getVoiture();
         DetailsVoiture detailsVoiture = request.getDetailsVoiture();
         Annonce annonce = request.getAnnonce();
-       voiture.setDetailsVoiture(detailsVoiture);
+        voiture.setDetailsVoiture(detailsVoiture);
         this.voitureRepository.save(voiture);
-        System.out.println(voiture.getMarque().getNom()+"NOM MOARQUE");
+        System.out.println(voiture.getMarque().getNom()+"NOM MARQUE"+ request.getPhotos().length);
+        Photos photosall = new Photos(request.getPhotos(), voiture.getId()+"");
+        this.photosRepository.save(photosall);
 
+//        for(int i=0; i<request.getPhotos().length; i++){
+//            System.out.println(request.getPhotos()[i]+"   IO LE SARY");
+//            System.out.println(photosall.getPhotos()+"    "+photosall.getVoiture().getId()+" iooooooooooooooo");
+//        }
         detailsVoiture.setVoiture(voiture);
         this.detailsVoitureRepository.save(detailsVoiture);
         annonce.setVoiture(voiture);

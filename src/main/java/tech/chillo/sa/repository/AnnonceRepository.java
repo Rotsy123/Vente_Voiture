@@ -14,6 +14,7 @@ import java.util.Optional;
 
 
 public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
+
     @Query(nativeQuery = true,
             value = "SELECT a.id, a.idvoiture, a.idpersonne, a.datepublication, h.bouquet,a.etat,a.datevalidation" +
                     " FROM historique h\n" +
