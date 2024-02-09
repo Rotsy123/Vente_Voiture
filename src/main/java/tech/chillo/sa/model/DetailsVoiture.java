@@ -16,12 +16,17 @@ public class DetailsVoiture {
     double etat_exterieur;
     double consommation;
     Carburant carburant;
+    int idcarburant;
     Transmission transmission;
+    int idtransmission;
     double prix;
 
+    public DetailsVoiture() {
+    }
 
-    public DetailsVoiture(){}
-    public DetailsVoiture(Voiture voiture, double kilometrage, int nbplaces, int nbportes, double etat_interieur, double etat_exterieur, double consommation, Carburant carburant, Transmission transmission, double prix) throws Exception {
+    public DetailsVoiture(Voiture voiture, double kilometrage, int nbplaces, int nbportes, double etat_interieur,
+            double etat_exterieur, double consommation, Carburant carburant, Transmission transmission, double prix)
+            throws Exception {
         this.voiture = voiture;
         this.kilometrage = kilometrage;
         this.nbplaces = nbplaces;
@@ -34,14 +39,18 @@ public class DetailsVoiture {
         this.setPrix(prix);
     }
 
-    public double getPrix(){return this.prix;}
-    public void setPrix(double prix)throws Exception{
-        if(prix>=0){
+    public double getPrix() {
+        return this.prix;
+    }
+
+    public void setPrix(double prix) throws Exception {
+        if (prix >= 0) {
             this.prix = prix;
-        }else{
+        } else {
             throw new Exception("PRIX NEGATIF");
         }
     }
+
     public Voiture getVoiture() {
         return voiture;
     }
@@ -113,7 +122,7 @@ public class DetailsVoiture {
     public void setTransmission(Transmission transmission) {
         this.transmission = transmission;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -122,7 +131,23 @@ public class DetailsVoiture {
         this.id = id;
     }
 
-    public DetailsVoiture getDetailsVoiture(tech.chillo.sa.entites.DetailsVoiture voiture){
+    public int getIdtransmission() {
+        return idtransmission;
+    }
+
+    public void setIdtransmission(int id) {
+        this.idtransmission = id;
+    }
+
+    public int getIdcarburant() {
+        return idcarburant;
+    }
+
+    public void setIdcarburant(int id) {
+        this.idcarburant = id;
+    }
+
+    public DetailsVoiture getDetailsVoiture(tech.chillo.sa.entites.DetailsVoiture voiture) {
         DetailsVoiture v = new DetailsVoiture();
         v.setId(voiture.getId());
         v.setKilometrage(voiture.getKilometrage());
@@ -132,9 +157,11 @@ public class DetailsVoiture {
         v.setEtat_interieur(voiture.getEtat_interieur());
         v.setConsommation(voiture.getConsommation());
         v.setCarburant(voiture.getCarburant());
+        v.setIdcarburant(voiture.getCarburant().getId());
         v.setTransmission(voiture.getTransmission());
+        v.setIdtransmission(voiture.getTransmission().getId());
         try {
-            v.setPrix(voiture.getPrix());           
+            v.setPrix(voiture.getPrix());
         } catch (Exception e) {
             // TODO: handle exception
         }

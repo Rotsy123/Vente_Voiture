@@ -10,7 +10,9 @@ import java.util.List;
 public class Voiture {
 
     private int id;
+    private int idmarque;
     private Marque marque;
+    private int idmodele;
     private Modele modele;
     private Date sortie;
     private DetailsVoiture detailsVoiture;
@@ -24,6 +26,15 @@ public class Voiture {
         this.setSortie(sortie);
         this.setDetailsVoiture(ds);
     }
+
+    public Voiture(int id, int idmarque, int idmodele, Date sortie, DetailsVoiture ds) {
+        this.setId(id);
+        this.setIdmarque(idmarque);
+        this.setIdmodele(idmodele);
+        this.setSortie(sortie);
+        this.setDetailsVoiture(ds);
+    }
+
     public Voiture(int id, Marque marque, Modele modele, Date sortie) {
         this.setId(id);
         this.setMarque(marque);
@@ -43,6 +54,20 @@ public class Voiture {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public int getIdmarque() {
+        return idmarque;
+    }
+
+    public void setIdmarque(int idmarque) {
+        this.idmarque = idmarque;
+    }
+    public int getIdmodele() {
+        return idmodele;
+    }
+
+    public void setIdmodele(int idmodele) {
+        this.idmodele = idmodele;
     }
 
     public Marque getMarque() {
@@ -73,7 +98,9 @@ public class Voiture {
         Voiture v = new Voiture();
         v.setId(voiture.getId());
         v.setMarque(voiture.getMarque());
+        v.setIdmarque(v.getMarque().getId());
         v.setModele(voiture.getModele());
+        v.setIdmodele(voiture.getModele().getId());
         v.setSortie(voiture.getSortie());
         try {
             v.setDetailsVoiture(new tech.chillo.sa.model.DetailsVoiture().getDetailsVoiture(voiture.getDetailsVoiture()));
