@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.chillo.sa.entites.Annonce;
+import tech.chillo.sa.entites.Personne;
 import tech.chillo.sa.model.StatistiqueComission;
 import tech.chillo.sa.security.token.JwtUtils;
 import tech.chillo.sa.service.AnnonceService;
