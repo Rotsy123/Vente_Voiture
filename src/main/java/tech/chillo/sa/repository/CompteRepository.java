@@ -1,5 +1,7 @@
 package tech.chillo.sa.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import tech.chillo.sa.entites.Compte;
@@ -9,5 +11,5 @@ public interface CompteRepository extends JpaRepository<Compte, Integer> {
 
     Compte findByPersonne_Id(int idPersonne);
 
-    Compte findByPersonne_Mail(String mail);
+    Optional<Compte> findByPersonne_Mail(String mail);
 }

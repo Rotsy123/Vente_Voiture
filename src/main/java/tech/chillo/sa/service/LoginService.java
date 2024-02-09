@@ -14,6 +14,8 @@ import tech.chillo.sa.repository.PersonneRepository;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 // import carselling.selling.exception.UserException;
@@ -31,13 +33,15 @@ public class LoginService implements UserDetailsService {
     @Autowired
     JwtUtils jwtUtils;
 
-     public Compte connected(String mail, String motdepasse) throws Exception {
+    public Compte connected(String mail, String motdepasse) throws Exception {
         Optional<Personne> personne = personneRepository.findByMail(mail);
 
         if (personne.isPresent()) {
             Personne user = personne.get();
-            Compte c = compteRepository.findByPersonne_Mail(mail);
-            if (motdepasse.equalsIgnoreCase(c.getMotdepasse())) return c;
+            Compte c = compteRepository.findByPersonne_Mail(mail)
+                    .orElseThrow(() -> new NoSuchElementException("Personne introuvable"));
+            if (motdepasse.equalsIgnoreCase(c.getMotdepasse()))
+                return c;
             throw new Exception("Mot de passe incorrect");
         }
 
@@ -67,21 +71,27 @@ public class LoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
-        Compte useroptional = compteRepository.findByPersonne_Mail(email);
-        if (useroptional == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé avec l'adresse e-mail: " + email);
+        try {
+            Compte userOptional = compteRepository.findByPersonne_Mail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("Personne introuvable"));
+
+            // Construire la liste des rôles de l'utilisateur (sans ajouter manuellement le
+            // préfixe "ROLE_")
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(userOptional.getPersonne().getRole()));
+
+            // Construire et retourner l'objet UserDetails
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(String.valueOf(userOptional.getPersonne().getId()))
+                    .password(userOptional.getMotdepasse())
+                    .authorities(authorities) // Utilisation de "authorities" au lieu de "roles"
+                    .build();
+
+        } catch (UsernameNotFoundException ex) {
+            throw ex; // Laisser UsernameNotFoundException être propagée
+        } catch (Exception ex) {
+            throw new UsernameNotFoundException("Une erreur s'est produite lors de la recherche de l'utilisateur", ex);
         }
-    
-        // Construire la liste des rôles de l'utilisateur (sans ajouter manuellement le préfixe "ROLE_")
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(useroptional.getPersonne().getRole()));
-    
-        // Construire et retourner l'objet UserDetails
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(String.valueOf(useroptional.getPersonne().getId()))
-                .password(useroptional.getMotdepasse())
-                .authorities(authorities) // Utilisation de "authorities" au lieu de "roles"
-                .build();
     }
+
 }

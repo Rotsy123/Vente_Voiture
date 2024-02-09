@@ -47,9 +47,15 @@ public class PersonneController {
 
     @PostMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> checkPersonne(@RequestBody AuthentificationDTO authentificationDTO) {
-        final UserDetails user = personneService.loadUserByUsername(authentificationDTO.mail());
-        String token = jwt.generateJwt(user);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        try {
+            final UserDetails user = personneService.loadUserByUsername(authentificationDTO.mail());
+            String token = jwt.generateJwt(user);
+            return new ResponseEntity<>(token, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+            
+        }
     }
 
     // @GetMapping(produces = APPLICATION_JSON_VALUE)
