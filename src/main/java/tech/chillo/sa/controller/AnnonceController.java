@@ -42,11 +42,11 @@ public class AnnonceController {
         try {
             int id = jwt.getId(token);
             System.out.println("ID "+ id);
-
             request.getAnnonce().setPersonne(personne.findById(id).orElseThrow());
             Annonce annonceOptional = this.annonceService.createsaveAnnonceWithDetails(request);
+            System.out.println("AROOOO");
             return new ResponseEntity<>(annonceOptional, HttpStatus.OK);
-            
+
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }

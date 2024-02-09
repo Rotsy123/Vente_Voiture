@@ -1,34 +1,48 @@
-// package tech.chillo.sa.entites;
+ package tech.chillo.sa.entites;
 
-// import jakarta.persistence.*;
+ import jakarta.persistence.*;
+ import org.springframework.data.mongodb.core.mapping.Document;
 
-// @Entity
-// @Table (name="photos")
-// public class Photos {
-//     byte[] photos;
-//     @ManyToOne
-//     @JoinColumn(name="idvoiture")
-//     Voiture voiture;
+ import java.util.UUID;
 
-//     public Photos(byte[] photos, Voiture voiture) {
+ @Document(collection = "photos")
+ public class Photos {
+     @Id
+     private String id;
+     String[] photos;
+     String idvoiture;
+
+     public Photos(String[] photos, String idvoiture) {
+         this.setId(UUID.randomUUID().toString());
+         this.photos = photos;
+         this.idvoiture = idvoiture;
+     }
+//     public Photos(String photos, Voiture voiture) {
 //         this.photos = photos;
 //         this.voiture = voiture;
 //     }
-//     public Photos(){}
+     public Photos(){}
 
-//     public byte[] getPhotos() {
-//         return photos;
-//     }
+     public String getId(){
+         return this.id;
+     }
+     public void setId(String id){
+         this.id = id;
+     }
 
-//     public void setPhotos(byte[] photos) {
-//         this.photos = photos;
-//     }
+     public String[] getPhotos() {
+         return photos;
+     }
 
-//     public Voiture getVoiture() {
-//         return voiture;
-//     }
+     public void setPhotos(String[] photos) {
+         this.photos = photos;
+     }
 
-//     public void setVoiture(Voiture voiture) {
-//         this.voiture = voiture;
-//     }
-// }
+     public String getIdvoiture() {
+         return idvoiture;
+     }
+
+     public void setIdvoiture(String idvoiture) {
+         this.idvoiture = idvoiture;
+     }
+ }

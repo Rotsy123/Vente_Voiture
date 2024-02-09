@@ -54,7 +54,6 @@ public class AnnonceFavorisController {
             return new ResponseEntity<>(this.annonceFavorisService.GetFavorisByPersonne(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
-
         }
     }
 }

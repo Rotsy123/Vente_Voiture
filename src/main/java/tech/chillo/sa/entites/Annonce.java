@@ -27,6 +27,8 @@ public class Annonce {
     private Timestamp  datepublication;
     private int etat;
     private Timestamp  datevalidation;
+
+
     public Annonce(int id, Voiture voiture, Personne personne, Bouquet bouquet, Timestamp  datepublication, int etat, Timestamp  datevalidation) {
         this.id = id;
         this.voiture = voiture;
@@ -117,4 +119,5 @@ public class Annonce {
     public void setDateplublication(Timestamp  dateplublication) {
         this.datepublication = dateplublication;
     }
+
 }

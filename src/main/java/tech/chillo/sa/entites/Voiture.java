@@ -21,7 +21,8 @@ public class Voiture {
     private Date sortie;
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "voiture", cascade = CascadeType.MERGE)
     private DetailsVoiture detailsVoiture;
-
+    @Transient
+    private String[] photos;
     // @OneToMany(fetch = FetchType.EAGER,mappedBy = "voiture", cascade =
     // CascadeType.MERGE)
     // private List<Photos> photos;
@@ -85,5 +86,6 @@ public class Voiture {
     public void setSortie(Date sortie) {
         this.sortie = sortie;
     }
-
+    public void setPhotos(String[] photos){this.photos = photos;}
+    public String[]getPhotos(){return this.photos;}
 }
