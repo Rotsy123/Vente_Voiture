@@ -54,8 +54,8 @@ public class Annonce {
     public int getIdpersonne() { return this.idpersonne; }
     public void setIdpersonne(int idpersonne) { this.idpersonne = idpersonne;}
 
-    public int getIdpersonne() { return this.idpersonne; }
-    public void setIdpersonne(int idpersonne) { this.idpersonne = idpersonne;}
+    public int getIdvoiture() { return this.idvoiture; }
+    public void setIdvoiture(int idvoiture) { this.idvoiture = idvoiture;}
 
     public String getId() {return this.id; }
     public void setId(String id){ this.id = id; }
